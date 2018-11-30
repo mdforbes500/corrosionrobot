@@ -2,3 +2,4 @@
 For GMU's Multidisciplinary Senior Design Project focused around the USDASC Corrosion Robot.
 
 This is the branch containing the backup disk images for the Raspberry Pi's. Each are given in their own folder.
+This uses a ScanDisk microSD card of 32GB in size.
