@@ -18,9 +18,9 @@ from PIL import Image
 import sys
 from PIL import ImageFilter
 
-myargs = rp.myargv(argv=sys.argv)
+args = rp.myargv(argv=sys.argv)
 
-def image_proc2(fh=args[1], size=sys.argv[2]):
+def image_proc2(fh=args[1], size=args[2]):
 """
 To run:
 $>> python imageProc2.py <image.jpg> <width_of_image>
