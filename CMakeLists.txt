@@ -156,7 +156,7 @@ target_link_libraries(image_publisher
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
 )
-target_link_libraries(systems_subscriber
+target_link_libraries(system_subscriber
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
 )
