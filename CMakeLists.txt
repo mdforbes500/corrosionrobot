@@ -139,7 +139,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(image_publisher src/image_publisher.cpp)
-add_executable(image_subscriber src/image_subscriber.cpp)
+add_executable(system_subscriber src/image_subscriber.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -156,7 +156,7 @@ target_link_libraries(image_publisher
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
 )
-target_link_libraries(image_subscriber
+target_link_libraries(systems_subscriber
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
 )
