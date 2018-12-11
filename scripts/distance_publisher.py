@@ -48,7 +48,7 @@ def distance_publisher():
         pub.publish(distance_str)
         rate.sleep()
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     try:
         distance_publisher()
     except rospy.ROSInterruptException:
