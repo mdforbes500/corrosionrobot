@@ -11,7 +11,8 @@
 #----------------------------------------#
 
 import rospy as rp
-from sensor_msgs.msg import Image, String
+from sensor_msgs.msg import Image
+from std_msgs.msg import String
 from cv_bridge import CvBridge
 import cv2 as cv
 
