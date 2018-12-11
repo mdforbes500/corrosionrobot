@@ -52,4 +52,4 @@ if __name__ == '__main__':
     try:
         distance_publisher()
     except rp.ROSInterruptException:
-        pass
+        GPIO.cleanup()
