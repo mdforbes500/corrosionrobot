@@ -24,7 +24,7 @@ def callback1(data):
 def callback2(data):
     rp.loginfo('recieving distance %s', data.data)
 
-def cv_listener():
+def system_listener():
     rp.init_node('listener', anonymous=False)
     rp.Subscriber('image_raw', Image, callback1)
     rp.Subscriber('distance', uint16, callback2)
@@ -32,4 +32,4 @@ def cv_listener():
     cv.destroyAllWindows()
 
 if __name__ == '__main__':
-    cv_listener()
+    system_listener()
