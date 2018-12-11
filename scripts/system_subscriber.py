@@ -27,7 +27,7 @@ def callback2(data):
 def system_listener():
     rp.init_node('listener', anonymous=False)
     rp.Subscriber('image_raw', Image, callback1)
-    rp.Subscriber('distance', uint16, callback2)
+    rp.Subscriber('distance', String, callback2)
     rp.spin()
     cv.destroyAllWindows()
 
