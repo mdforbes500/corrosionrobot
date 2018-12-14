@@ -50,5 +50,11 @@ qtcreator-*
 # MacOS filesystem
 .DS_Store
 
+# Image Files
+*.png
+*.jpg
+*.jpeg
+*.tiff
+
 # Catkin custom files
 CATKIN_IGNORE
