@@ -28,7 +28,7 @@ def image_proc2(fh=args[1], size=args[2]):
 
 	pixel_size = (image_width/float(pixel_number_wide))**2
 
-	print "Pixel size: {0} " .format(pixel_size)
+	print "Pixel size: {0} ".format(pixel_size)
 	pixels = list(pic.getdata())
 	counter = 0
 	corCount = 0
