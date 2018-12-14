@@ -17,13 +17,11 @@ from PIL import Image
 import sys
 from PIL import ImageFilter
 
-args = rp.myargv(argv=sys.argv)
-
-def image_proc2(fh=args[1], distance=args[2]):
-	image = fh
+def image_proc2(args):
+	image = args[1]
 	pic = Image.open(image, 'r')
 	pixel_number_wide = pic.size[0]
-	image_width = (1.50+1.70)/3.04*(3280/3.68)*(680/3280)*float(distance)
+	image_width = (1.50+1.70)/3.04*(3280/3.68)*(680/3280)*float(args[2])
 
 	pixel_size = (image_width/float(pixel_number_wide))**2
 
@@ -44,7 +42,4 @@ def image_proc2(fh=args[1], distance=args[2]):
 	print("Total Area of Corrosion: {0} Square Centimeters".format(corrosion_area))
 
 if __name__ == "main":
-    try:
-        image_proc2(fh=args[1], distance=args[2])
-    except KeyboardInterrupt:
-        pass
+    image_proc2(sys.argv)
