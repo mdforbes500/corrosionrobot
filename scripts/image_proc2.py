@@ -20,10 +20,10 @@ from PIL import ImageFilter
 
 args = rp.myargv(argv=sys.argv)
 
-def image_proc2(fh=args[1], size=args[2]):
+def image_proc2(fh=args[1], distance=args[2]):
 """
 To run:
-$>> python imageProc2.py <image.jpg> <width_of_image>
+$>> python imageProc2.py <image.jpg> <distance>
 
  Where <image.jpg> is the filename of the image file
  Where <width_of_image> is the real world width (in centimeters)
@@ -31,7 +31,7 @@ $>> python imageProc2.py <image.jpg> <width_of_image>
 	image = fh
 	pic = Image.open(image, 'r')
 	pixel_number_wide = pic.size[0]
-	image_width = float(size)
+	image_width = (1.50+1.70)/3.04*(3280/3.68)*(680/3280)*float(distance)
 
 	pixel_size = (image_width/float(pixel_number_wide))**2
 
@@ -50,3 +50,9 @@ $>> python imageProc2.py <image.jpg> <width_of_image>
 	print "Number of corrosion pixels: {0}\n" .format(corCount)
 	corrosion_area = pixel_size*corCount
 	print "Total Area of Corrosion: {0} Square Centimeters" .format(corrosion_area)
+
+if __name__ == "main":
+    try:
+        image_proc2(fh=args[1], distance=args[2])
+    except rp.ROSInterruptException:
+        pass
