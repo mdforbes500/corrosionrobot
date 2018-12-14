@@ -21,13 +21,6 @@ from PIL import ImageFilter
 args = rp.myargv(argv=sys.argv)
 
 def image_proc2(fh=args[1], size=args[2]):
-"""
-To run:
-$>> python imageProc2.py <image.jpg> <width_of_image>
-
- Where <image.jpg> is the filename of the image file
- Where <width_of_image> is the real world width (in centimeters)
-"""
 	image = fh
 	pic = Image.open(image, 'r')
 	pixel_number_wide = pic.size[0]
