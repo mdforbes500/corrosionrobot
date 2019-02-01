@@ -13,35 +13,64 @@
 #----------------------------------------#
 
 from PIL import Image
-import sys
 from PIL import ImageFilter
+import math
+import sys
 
 def main(args):
-    image = args[1]
-    pic = Image.open(image, 'r')
-    width = float(pic.size[0]) #px
-    sensor_size = 0.386 #cm
-    focal_length = 0.304 #cm
+    """
+    Takes the filehandle of the image and the distance supplied by the user and
+    calculates the area of the corroded site.
+    """
+    #Inputs from system arguments
+    filehandle = args[1]
+    print("Opening and processing '{0}'...".format(filehandle))
     distance = float(args[2]) #cm
-    image_width = sensor_size*distance/focal_length*640/2464 #cm
-    print("Reading '{0}'...".format(args[1]))
-    print("Distance from object: {0} cm".format(args[2]))
+    print("Distance from object: {0} cm".format(distance))
+
+    #Opening filehandle for reading and saving in memory as image
+    image = Image.open(filehandle, 'r')
+
+    # Determining the image width and height in pixels
+    (width, height) = image.size #px
+
+    # Field of View for PiCamera V2
+    FOV = (62.2, 48.8) #deg: horizontal X vertical
+
+    #Angle of one pixel for both height and width
+    w_angle = 1/width*FOV[0]/2 #deg
+    h_angle = 1/height*FOV[1]/2 #deg
+
+    #Width and Height of one pixel in cm
+    px_width = distance*math.sin(math.radians(w_angle)) #cm
+    px_height = distance*math.sin(math.radians(h_angle)) #cm
+
+    #Image width and height in cm
+    image_width = px_width*width #cm
     print("Image width: {0:.{1}f} cm".format(image_width,3))
+    image_height = px_height*height #cm
+    print("Image height: {0:.{1}f} cm".format(image_height,3))
 
-    pixel_area = (image_width/width)**2
-    pixels = list(pic.getdata())
+    #Area of a single pixel
+    pixel_area = px_width*px_height #cm^2
+
+    #Setting RGB values in array
+    pixels = list(image.getdata())
+
+    #Counting total number of corroded pixels
     counter = 0
-    corCount = 0
-
+    corroded = 0
     for x in pixels:
         if(x[0]+x[1]+x[2] >= 0):
             counter+=1
         if(x[0]+x[1]+x[2] < 300):
-            corCount+=1
+            corroded+=1
+
+    #Total corroded area in frame
+    corrosion_area = pixel_area*corroded
 
     print("Number of pixels: {0:d} pixels".format(counter))
-    print("Number of corrosion pixels: {0:d} pixels".format(corCount))
-    corrosion_area = pixel_area*corCount
+    print("Number of corrosion pixels: {0:d} pixels".format(corroded))
     print("Total Area of Corrosion: {0:.{1}f} cm^2".format(corrosion_area,3))
 
 
