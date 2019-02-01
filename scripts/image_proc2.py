@@ -12,6 +12,7 @@
 # the corrosion.
 #----------------------------------------#
 
+from __future__ import division
 from PIL import Image
 from PIL import ImageFilter
 import math
@@ -32,14 +33,18 @@ def main(args):
     image = Image.open(filehandle, 'r')
 
     # Determining the image width and height in pixels
-    (width, height) = image.size #px
+    width = image.size[0] #px
+    height = image.size[1] #px
+    print(width)
 
     # Field of View for PiCamera V2
     FOV = (62.2, 48.8) #deg: horizontal X vertical
+    print(FOV[0])
 
     #Angle of one pixel for both height and width
-    w_angle = 1/width*FOV[0]/2 #deg
-    h_angle = 1/height*FOV[1]/2 #deg
+    w_angle = 1/width*FOV[0] #deg
+    h_angle = 1/height*FOV[1] #deg
+    print(w_angle)
 
     #Width and Height of one pixel in cm
     px_width = distance*math.sin(math.radians(w_angle)) #cm
@@ -72,6 +77,5 @@ def main(args):
     print("Number of pixels: {0:d} pixels".format(counter))
     print("Number of corrosion pixels: {0:d} pixels".format(corroded))
     print("Total Area of Corrosion: {0:.{1}f} cm^2".format(corrosion_area,3))
-
 
 main(sys.argv)
