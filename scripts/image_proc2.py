@@ -79,7 +79,7 @@ def main(args):
     corrosion_area = pixel_area*black
 
     print("Number of pixels: {0:d} pixels".format(counter))
-    print("Number of corrosion pixels: {0:d} pixels".format(black))
+    print("Number of corroded pixels: {0:d} pixels".format(black))
     print("Total Area of Corrosion: {0:.{1}f} cm^2".format(corrosion_area,3))
 
 main(sys.argv)
