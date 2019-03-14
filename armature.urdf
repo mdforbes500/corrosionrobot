@@ -1,0 +1,70 @@
+<!--aramture.urdf-->
+
+<robot name="nessie">
+  <link name="base_link" />
+  <link name="link_1" />
+  <link name="link_2" />
+  <link name="link_3" />
+  <link name="link_4" />
+  <link name="link_5" />
+  <link name="link_6" />
+  <link name="link_7" />
+  <link name="sensor" />
+
+  <joint name="joint_1" type="revolute">
+    <parent link="base_link" />
+    <child link="link_1" />
+    <limit lower="0" />
+    <limit upper="180" />
+  </joint>
+
+  <joint name="joint_2" type="revolute">
+    <parent link="link_1" />
+    <child link="link_2" />
+    <limit lower="0" />
+    <limit upper="180" />
+  </joint>
+
+  <joint name="joint_3" type="revolute">
+    <parent link="link_1" />
+    <child link="link_3" />
+    <limit lower="0" />
+    <limit upper="180" />
+  </joint>
+
+  <joint name="joint_4" type="continuous">
+    <parent link="link_3" />
+    <child link="link_4" />
+  </joint>
+
+  <joint name="joint_5" type="continuous">
+    <parent link="link_4" />
+    <child link="link_5" />
+  </joint>
+
+  <joint name="joint_6" type="continuous">
+    <parent link="link_2" />
+    <child link="link_5" />
+  </joint>
+
+  <joint name="joint_7" type="revolute">
+    <parent link="link_5" />
+    <child link="link_6" />
+    <limit lower="0" />
+    <limit upper="180" />
+  </joint>
+
+  <joint name="joint_8" type="revolute">
+    <parent link="link_6" />
+    <child link="link_7" />
+    <limit lower="0" />
+    <limit upper="180" />
+  </joint>
+
+  <joint name="joint_9" type="revolute">
+    <parent link="link_7" />
+    <child link="sensor" />
+    <limit lower="0" />
+    <limit upper="180" />
+  </joint>
+</robot>
