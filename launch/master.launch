@@ -2,13 +2,7 @@
 <launch>
   <node
     pkg="image_view"
-    type="image_view"
-    name="left_sub">
-  </node>
-
-  <node
-    pkg="image_view"
-    type="image_view"
-    name="right_sub">
+    type="stereo_view"
+    name="image_sub">
   </node>
 </launch>

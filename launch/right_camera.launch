@@ -6,6 +6,6 @@
     type="cv_camera_node"
     name="right_camera">
     <param name="device_id" value="0" />
-    <remap from="right_camera/image_raw" to="right/image_raw"/> 
+    <remap from="right_camera/image_raw" to="stereo/right/image"/> 
   </node>
 </launch>
