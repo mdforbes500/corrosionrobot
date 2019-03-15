@@ -26,7 +26,7 @@ def callback2(data):
     rp.loginfo('recieving distance %s', data.data)
 
 def system_listener():
-    rp.init_node('listener', anonymous=False)
+    rp.init_node('listener', anonymous=True)
     rp.Subscriber('image_raw', Image, callback1)
     rp.Subscriber('distance', String, callback2)
     rp.spin()
