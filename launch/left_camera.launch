@@ -20,6 +20,6 @@
     <param name="height" value="960"/>
 
     <param name="framerate" value="30"/>
-    <remap from="left/image" to="stereo/left/image_raw"/>
+    <remap from="left/image" to="stereo/left/image"/>
   </node>
 </launch>
