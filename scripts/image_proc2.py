@@ -15,6 +15,8 @@
 from __future__ import division
 from PIL import Image
 from PIL import ImageFilter
+import pylab as plt
+import cv2 as cv
 import numpy as np
 import math
 import sys
@@ -31,12 +33,16 @@ def main(args):
     print("Distance from object: {0} cm".format(distance))
 
     #Opening filehandle for reading and saving in memory as grayscale image
-    image = np.array(Image.open(filehandle, 'r').convert('L'),'f')
+    image = cv.imread(filehandle)
+    image_gray = cv.cvtColor(image, cv.COLOR_RGB2GRAY)
+    print(image_gray)
+    cv.imshow('Gray image', image_gray)
+    cv.waitKey(0)
 
     # Determining the CMOS width and height in pixels
-    width = image.shape[1] #px
+    width = np.size(image_gray, 1) #px
     print("Width of image is : {} pixels".format(width))
-    height = image.shape[0] #px
+    height = np.size(image_gray, 0) #px
     print("Height of image is : {} pixels".format(height))
 
     # Field of View for PiCamera V2
@@ -69,17 +75,27 @@ def main(args):
     #Counting total number of corroded pixels
     deviation = int(np.std(image))
     counter = width*height
-    black = 0
-    for row in image:
-        for pixel in row:
-            if pixel >= 3*deviation:
-                black += 1
+    CountPixelB = 0
+    CountPixelW = 0
+    for y in range(height-1):
+        for x in range(width-1):
+            if image_gray[y,x] >= 127:
+                CountPixelW += 1
+            if image_gray[y,x] < 127:
+                CountPixelB += 1
 
     #Total corroded area in frame
-    corrosion_area = pixel_area*black
+    corrosion_area = pixel_area*CountPixelB
+
+    sides = math.sqrt(corrosion_area)
+    adj = math.sqrt(distance**2 - sides**2/4)
+    theta = 2*math.atan(sides/(2*adj))
+    arclength = distance*theta
+    adjusted_area = arclength*image_width
 
     print("Number of pixels: {0:d} pixels".format(counter))
-    print("Number of corroded pixels: {0:d} pixels".format(black))
+    print("Number of corroded pixels: {0:d} pixels".format(CountPixelB))
     print("Total Area of Corrosion: {0:.{1}f} cm^2".format(corrosion_area,3))
+    print("Adjusted area with curvature: {0:.{1}f} cm^2".format(adjusted_area,3))
 
 main(sys.argv)
