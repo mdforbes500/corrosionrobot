@@ -1,0 +1,8 @@
+<!--master.launch-->
+<launch>
+  <node
+    pkg="image_view"
+    type="stereo_view"
+    name="image_sub">
+  </node>
+</launch>
