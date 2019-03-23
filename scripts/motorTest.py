@@ -15,6 +15,6 @@ while var == 1:
 		kit.motor1.throttle = value
 		kit.motor2.throttle = value
 		kit.motor3.throttle = value2
-		kit.motor3.throttle = value2
+		kit.motor4.throttle = value2
 
 print("Completed Test!")
