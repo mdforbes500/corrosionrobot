@@ -43,19 +43,23 @@ def rotateCCW(group):
 #stops the movement of the specified group(front-rotate, rear-rotate, base)
 def stop(group):
 	switch(group){
-		case 0:	rotate_kit.motor1.throttle = 0
+		case 0:
+				rotate_kit.motor1.throttle = 0
 				rotate_kit.motor2.throttle = 0
 				break
-		case 1: rotate_kit.motor3.throttle = 0
+		case 1:
+				rotate_kit.motor3.throttle = 0
 				rotate_kit.motor4.throttle = 0
 				break
-		case 2: base_kit.motor1.throttle = 0
+		case 2:
+				base_kit.motor1.throttle = 0
 				base_kit.motor2.throttle = 0
 				base_kit.motor3.throttle = 0
 				base_kit.motor4.throttle = 0
 				break
-		default:	allStop()
-					break
+		default:
+				allStop()
+				break
 	}
 
 #stops ALL MOTORS
