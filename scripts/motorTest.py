@@ -53,7 +53,7 @@ def stop(group):
 		base_kit.motor2.throttle = 0
 		base_kit.motor3.throttle = 0
 		base_kit.motor4.throttle = 0
-    else:
+	else:
 		allStop()
 
 
