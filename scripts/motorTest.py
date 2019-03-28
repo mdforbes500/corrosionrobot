@@ -42,25 +42,20 @@ def rotateCCW(group):
 
 #stops the movement of the specified group(front-rotate, rear-rotate, base)
 def stop(group):
-	switch(group){
-		case 0:
-				rotate_kit.motor1.throttle = 0
-				rotate_kit.motor2.throttle = 0
-				break
-		case 1:
-				rotate_kit.motor3.throttle = 0
-				rotate_kit.motor4.throttle = 0
-				break
-		case 2:
-				base_kit.motor1.throttle = 0
-				base_kit.motor2.throttle = 0
-				base_kit.motor3.throttle = 0
-				base_kit.motor4.throttle = 0
-				break
-		default:
-				allStop()
-				break
-	}
+	if group == 0:
+		rotate_kit.motor1.throttle = 0
+		rotate_kit.motor2.throttle = 0
+	elif group == 1:
+		rotate_kit.motor3.throttle = 0
+		rotate_kit.motor4.throttle = 0
+	elif group == 2:
+		base_kit.motor1.throttle = 0
+		base_kit.motor2.throttle = 0
+		base_kit.motor3.throttle = 0
+		base_kit.motor4.throttle = 0
+    else:
+		allStop()
+
 
 #stops ALL MOTORS
 def allStop():
@@ -82,34 +77,26 @@ def main():
 			"2 for BASE\n\t 3 to stop everything\n"))
 		dir_val = int(input("Enter the direction to move...\n\t"\
 			"8 for CCW/BACKWARD\n\t, 9 for CW/FORWARD\n\t, 0 for STOP\n"))
-		switch(group_val){
-			case 0:	if dir_val == 8:
-						rotateCCW(0)
-						break
-					elif dir_val == 9:
-						rotateCW(0)
-						break
-				    else:
-						stop(0)
-						break
-			case 1:	if dir_val == 8:
-						rotateCCW(1)
-						break
-					elif dir_val == 9:
-						rotateCW(1)
-						break
-				    else:
-						stop(1)
-						break
-			case 2:	if dir_val == 8:
-						moveBackward()
-						break
-					elif dir_val == 9:
-						moveForward()
-						break
-				    else:
-						stop(2)
-						break
-			default: allStop()
-					 break
-		}
+		if group_val == 0:
+			if dir_val == 8:
+				rotateCCW(0)
+			elif dir_val == 9:
+				rotateCW(0)
+			else:
+				stop(0)
+		elif group_val == 1:
+			if dir_val == 8:
+				rotateCCW(1)
+			elif dir_val == 9:
+				rotateCW(1)
+			else:
+				stop(1)
+		elif group_val ==2:
+			if dir_val == 8:
+				moveBackward()
+			elif dir_val == 9:
+				moveForward()
+			elif dir_val == 0:
+				stop(2)
+		else:
+			 allStop()
