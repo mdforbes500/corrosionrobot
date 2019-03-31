@@ -1,6 +1,6 @@
 from adafruit_motorkit import MotorKit
 base_kit = MotorKit() #kit object for first board(CONTROLS BASE MOTORS)
-rotate_kit = MotorKit(address=0x61) #kit object for 2nd board(ROTATE MOTORS)
+rotate_kit = MotorKit() #kit object for 2nd board(ROTATE MOTORS)
 
 #group assignment
 FRONT = 0
