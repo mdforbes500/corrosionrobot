@@ -1,4 +1,8 @@
 from adafruit_motorkit import MotorKit
+from adafruit_servokit import ServoKit
+import time
+
+servo_kit = ServoKit(channels=16)
 base_kit = MotorKit() #kit object for first board(CONTROLS BASE MOTORS)
 rotate_kit = MotorKit(address=0x61) #kit object for 2nd board(ROTATE MOTORS)
 
@@ -7,6 +11,115 @@ FRONT = 0
 REAR = 1
 BASE = 2
 
+#Servo Assignment
+bottom_base_front = 0
+bottom_base_rear = 1
+upper_left_front = 2
+upper_right_front = 3
+upper_left_rear = 4
+upper_right_rear = 5
+#continuous servo assignement
+rack_servo = 6
+front_package = 7
+rear_package = 8
+
+#variables used for the angles of the 180 degree servos
+bb_front_angle = 90
+bb_rear_angle = 90
+ul_front_angle = 90
+ur_front_angle = 90
+ul_rear_angle = 90
+ur_rear_angle = 90
+
+#####################RACK SERVO CODE####################################
+#call to extend the rack
+def extendRack():
+	servo_kit.continuous_servo[rack_servo].throttle = 1
+
+#call to retract the rack
+def retractRack():
+	servo_kit.continuous_servo[rack_servo].throttle = -1
+
+#call to stop the rack from moving
+def stopRack():
+	servo_kit.continuous_servo[rack_servo].throttle = 0
+
+
+
+######################FRONT PACKAGE SERVO CODE#########################
+
+#call to rotate front sensor package CLOCKWISE
+def spinFrontCW():
+	servo_kit.continuous_servo[front_package].throttle = 1
+
+#call to rotate front sensor package COUNTER-CLOCKWISE
+def spinFrontCCW():
+	servo_kit.continuous_servo[front_package].throttle = -1
+
+#call to stop the front sensor package from spinning
+def stopFront():
+	servo_kit.continuous_servo[front_package].throttle = 0
+
+
+
+######################REAR PACKAGE SERVO CODE#########################
+
+#call to rotate rear sensor package CLOCKWISE
+def spinRearCW():
+	servo_kit.continuous_servo[rear_package].throttle = 1
+
+#call to rotate front sensor package COUNTER-CLOCKWISE
+def spinRearCCW():
+	servo_kit.continuous_servo[rear_package].throttle = -1
+
+#call to stop the front sensor package from spinning
+def stopRear():
+	servo_kit.continuous_servo[rear_package].throttle = 0
+
+
+
+######################BOTTOM BASE FRONT SERVO CODE####################
+
+#Call to extend the bottom base front wheels
+def extendBBFront():
+	new_angle = bb_front_angle + 5
+	servo_kit.servo[bottom_base_front].angle = new_angle
+	bb_front_angle = new_angle
+
+#Call to retract the bottom base front wheels
+def retractBBFront():
+	new_angle = bb_front_angle - 5
+	servo_kit.servo[bottom_base_front].angle = new_angle
+	bb_front_angle = new_angle
+
+
+######################BOTTOM BASE REAR SERVO CODE####################
+
+#Call to extend the bottom base front wheels
+def extendBBRear():
+	new_angle = bb_rear_angle + 5
+	servo_kit.servo[bottom_base_rear].angle = new_angle
+	bb_rear_angle = new_angle
+
+#Call to retract the bottom base front wheels
+def retractBBRear():
+	new_angle = bb_rear_angle - 5
+	servo_kit.servo[bottom_base_rear].angle = new_angle
+	bb_rear_angle = new_angle
+
+
+
+#######################UPPER WHEEL SERVO EXTEND/RETRACT CODE#########
+
+
+
+
+
+#########################################################################
+#########################################################################
+################ ROBOT MOTOR CONTROL FUNCTIONS ##########################
+#########################################################################
+#########################################################################
 
 #Call to move the robot forward
 def moveForward():
@@ -79,25 +192,25 @@ def main():
 			"8 for CCW/BACKWARD\n\t, 9 for CW/FORWARD\n\t, 0 for STOP\n"))
 		if group_val == 0:
 			if dir_val == 8:
-				rotateCCW(0)
+				rotateCCW(FRONT)
 			elif dir_val == 9:
-				rotateCW(0)
+				rotateCW(FRONT)
 			else:
-				stop(0)
+				stop(FRONT)
 		elif group_val == 1:
 			if dir_val == 8:
-				rotateCCW(1)
+				rotateCCW(REAR)
 			elif dir_val == 9:
-				rotateCW(1)
+				rotateCW(REAR)
 			else:
-				stop(1)
+				stop(REAR)
 		elif group_val ==2:
 			if dir_val == 8:
 				moveBackward()
 			elif dir_val == 9:
 				moveForward()
 			elif dir_val == 0:
-				stop(2)
+				stop(BASE)
 		else:
 			 allStop()
 
