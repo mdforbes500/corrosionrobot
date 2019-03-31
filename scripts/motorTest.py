@@ -10,35 +10,35 @@ BASE = 2
 
 #Call to move the robot forward
 def moveForward():
-	base_kit.motor1.throttle = 6
-	base_kit.motor2.throttle = 6
-	base_kit.motor3.throttle = -6
-	base_kit.motor4.throttle = -6
+	base_kit.motor1.throttle = 0.6
+	base_kit.motor2.throttle = 0.6
+	base_kit.motor3.throttle = -0.6
+	base_kit.motor4.throttle = -0.6
 
 #Call to move the robot backward
 def moveBackward():
-	base_kit.motor1.throttle = -6
-	base_kit.motor2.throttle = -6
-	base_kit.motor3.throttle = 6
-	base_kit.motor4.throttle = 6
+	base_kit.motor1.throttle = -0.6
+	base_kit.motor2.throttle = -0.6
+	base_kit.motor3.throttle = 0.6
+	base_kit.motor4.throttle = 0.6
 
 #rotates the specified group(front or back) clockWise
 def rotateCW(group):
 	if group == 0:
-		rotate_kit.motor1.throttle = 6
-		rotate_kit.motor2.throttle = 6
+		rotate_kit.motor1.throttle = 0.6
+		rotate_kit.motor2.throttle = 0.6
 	elif group == 1:
-		rotate_kit.motor3.throttle = 6
-		rotate_kit.motor4.throttle = 6
+		rotate_kit.motor3.throttle = 0.6
+		rotate_kit.motor4.throttle = 0.6
 
 #rotates the specified group(front or back) counter-clockWise
 def rotateCCW(group):
 	if group == 0:
-		rotate_kit.motor1.throttle = -6
-		rotate_kit.motor2.throttle = -6
+		rotate_kit.motor1.throttle = -0.6
+		rotate_kit.motor2.throttle = -0.6
 	elif group == 1:
-		rotate_kit.motor3.throttle = -6
-		rotate_kit.motor4.throttle = -6
+		rotate_kit.motor3.throttle = -0.6
+		rotate_kit.motor4.throttle = -0.6
 
 #stops the movement of the specified group(front-rotate, rear-rotate, base)
 def stop(group):
