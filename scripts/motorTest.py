@@ -100,3 +100,5 @@ def main():
 				stop(2)
 		else:
 			 allStop()
+
+main()
