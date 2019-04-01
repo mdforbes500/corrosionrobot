@@ -225,33 +225,35 @@ def main():
 		servo_motor_select = int(input("SERVO CONTROL OR MOTOR CONTROL...\n\t"\
 			"0 for SERVO\n\t 1 for MOTOR\n\t"\
 			"3 to stop everything\n"))
-		if servo_motor_select = 1:
+		if servo_motor_select = 3
+			allStop()
+		elif servo_motor_select = 1:
 			group_val = int(input("Enter what you would like to control...\n\t"\
 				"0 for FRONT_ROTATE\n\t 1 for REAR_ROTATE\n\t"\
-				"2 for BASE\n\t 3 to stop everything\n"))
+				"2 for BASE\n"))
 			dir_val = int(input("Enter the direction to move...\n\t"\
-				"8 for CCW/BACKWARD\n\t, 9 for CW/FORWARD\n\t, 0 for STOP\n"))
+				"8 for CCW/BACKWARD\n\t, 9 for CW/FORWARD\n"))
 			if group_val == 0:
 				if dir_val == 8:
 					rotateCCW(FRONT)
 				elif dir_val == 9:
 					rotateCW(FRONT)
 				else:
-					stop(FRONT)
+					allStop()
 			elif group_val == 1:
 				if dir_val == 8:
 					rotateCCW(REAR)
 				elif dir_val == 9:
 					rotateCW(REAR)
 				else:
-					stop(REAR)
+					allStop()
 			elif group_val ==2:
 				if dir_val == 8:
 					moveBackward()
 				elif dir_val == 9:
 					moveForward()
-				elif dir_val == 0:
-					stop(BASE)
+				else:
+					allStop()
 			else:
 				 allStop()
 		elif servo_motor_select = 0:
@@ -261,7 +263,7 @@ def main():
 				"4 for rack servo\n\t 5 for front sensor package servo\n\t"\
 				"6 for rear sensor package servo\n"))
 			dir_val = int(input("Enter the direction...\n\t"\
-				"8 for CCW/RETRACT\n\t, 9 for CW/EXTEND\n\t, 0 for STOP\n"))
+				"8 for CCW/RETRACT\n\t, 9 for CW/EXTEND\n"))
 			if group_val == 0:
 				if dir_val == 8:
 					retractBBFront()
