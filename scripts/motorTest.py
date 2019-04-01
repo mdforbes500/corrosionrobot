@@ -26,10 +26,12 @@ rear_package = 8
 #variables used for the angles of the 180 degree servos
 bb_front_angle = 90
 bb_rear_angle = 90
-ul_front_angle = 90
-ur_front_angle = 90
-ul_rear_angle = 90
-ur_rear_angle = 90
+# ul_front_angle = 90
+# ur_front_angle = 90
+upper_front_angle = 90
+# ul_rear_angle = 90
+# ur_rear_angle = 90
+upper_rear_angle = 90
 
 #####################RACK SERVO CODE####################################
 #call to extend the rack
@@ -109,9 +111,39 @@ def retractBBRear():
 
 
 
-#######################UPPER WHEEL SERVO EXTEND/RETRACT CODE#########
+#######################UPPER FRONT WHEEL SERVO EXTEND/RETRACT CODE#########
+
+#call to extend the upper front wheels
+def extendUFront():
+	new_angle = upper_front_angle + 10
+	servo_kit.servo[upper_left_front].angle = new_angle
+	servo_kit.servo[upper_right_front].angle = new_angle
+	upper_front_angle = new_angle
+
+#call to retrtact the upper front wheels
+def retractUFront():
+	new_angle = upper_front_angle - 10
+	servo_kit.servo[upper_left_front].angle = new_angle
+	servo_kit.servo[upper_right_front].angle = new_angle
+	upper_front_angle = new_angle
 
 
+
+#######################UPPER REAR WHEEL SERVO EXTEND/RETRACT CODE#########
+
+#call to extend the upper rear wheels
+def extendURear():
+	new_angle = upper_rear_angle + 10
+	servo_kit.servo[upper_left_rear].angle = new_angle
+	servo_kit.servo[upper_right_rear].angle = new_angle
+	upper_rear_angle = new_angle
+
+#call to retrtact the upper rear wheels
+def retractURear():
+	new_angle = upper_rear_angle - 10
+	servo_kit.servo[upper_left_rear].angle = new_angle
+	servo_kit.servo[upper_right_rear].angle = new_angle
+	upper_rear_angle = new_angle
 
 
 
@@ -170,7 +202,7 @@ def stop(group):
 		allStop()
 
 
-#stops ALL MOTORS
+#stops ALL MOTORS AND SERVOS
 def allStop():
 	base_kit.motor1.throttle = 0
 	base_kit.motor2.throttle = 0
@@ -180,38 +212,106 @@ def allStop():
 	rotate_kit.motor2.throttle = 0
 	rotate_kit.motor3.throttle = 0
 	rotate_kit.motor4.throttle = 0
+	servo_kit.continuous_servo[rack_servo].throttle = 0
+	servo_kit.continuous_servo[front_package].throttle = 0
+	servo_kit.continuous_servo[rear_package].throttle = 0
+
+
 
 
 def main():
 	var = 1
 	while var == 1:
-		group_val = int(input("Enter what you would like to control...\n\t"\
-			"0 for FRONT_ROTATE\n\t 1 for REAR_ROTATE\n\t"\
-			"2 for BASE\n\t 3 to stop everything\n"))
-		dir_val = int(input("Enter the direction to move...\n\t"\
-			"8 for CCW/BACKWARD\n\t, 9 for CW/FORWARD\n\t, 0 for STOP\n"))
-		if group_val == 0:
-			if dir_val == 8:
-				rotateCCW(FRONT)
-			elif dir_val == 9:
-				rotateCW(FRONT)
+		servo_motor_select = int(input("SERVO CONTROL OR MOTOR CONTROL...\n\t"\
+			"0 for SERVO\n\t 1 for MOTOR\n\t"\
+			"3 to stop everything\n"))
+		if servo_motor_select = 1:
+			group_val = int(input("Enter what you would like to control...\n\t"\
+				"0 for FRONT_ROTATE\n\t 1 for REAR_ROTATE\n\t"\
+				"2 for BASE\n\t 3 to stop everything\n"))
+			dir_val = int(input("Enter the direction to move...\n\t"\
+				"8 for CCW/BACKWARD\n\t, 9 for CW/FORWARD\n\t, 0 for STOP\n"))
+			if group_val == 0:
+				if dir_val == 8:
+					rotateCCW(FRONT)
+				elif dir_val == 9:
+					rotateCW(FRONT)
+				else:
+					stop(FRONT)
+			elif group_val == 1:
+				if dir_val == 8:
+					rotateCCW(REAR)
+				elif dir_val == 9:
+					rotateCW(REAR)
+				else:
+					stop(REAR)
+			elif group_val ==2:
+				if dir_val == 8:
+					moveBackward()
+				elif dir_val == 9:
+					moveForward()
+				elif dir_val == 0:
+					stop(BASE)
 			else:
-				stop(FRONT)
-		elif group_val == 1:
-			if dir_val == 8:
-				rotateCCW(REAR)
-			elif dir_val == 9:
-				rotateCW(REAR)
-			else:
-				stop(REAR)
-		elif group_val ==2:
-			if dir_val == 8:
-				moveBackward()
-			elif dir_val == 9:
-				moveForward()
-			elif dir_val == 0:
-				stop(BASE)
-		else:
-			 allStop()
+				 allStop()
+		elif servo_motor_select = 0:
+			group_val = int(input("Enter what you would like to control...\n\t"\
+				"0 for bottom base front\n\t 1 for bottom base rear\n\t"\
+				"2 for upper front wheels\n\t 3 for upper rear wheels\n\t"\
+				"4 for rack servo\n\t 5 for front sensor package servo\n\t"\
+				"6 for rear sensor package servo\n"))
+			dir_val = int(input("Enter the direction...\n\t"\
+				"8 for CCW/RETRACT\n\t, 9 for CW/EXTEND\n\t, 0 for STOP\n"))
+			if group_val == 0:
+				if dir_val == 8:
+					retractBBFront()
+				elif dir_val == 9:
+					extendBBFront()
+				else:
+					allStop()
+			elif group_val == 1:
+				if dir_val == 8:
+					retractBBRear()
+				elif dir_val == 9:
+					extendBBRear()
+				else:
+					allStop()
+			elif group_val ==2:
+				if dir_val == 8:
+					extendUFront()
+				elif dir_val == 9:
+					retractUFront()
+				elif dir_val == 0:
+					allStop()
+			elif group_val == 3:
+				if dir_val == 8:
+					retractURear()
+				elif dir_val == 9:
+					extendURear()
+				else:
+					allStop()
+			elif group_val ==4:
+				if dir_val == 8:
+					extendRack()
+				elif dir_val == 9:
+					retractRack()
+				elif dir_val == 0:
+					allStop()
+			elif group_val == 5:
+				if dir_val == 8:
+					spinFrontCCW()
+				elif dir_val == 9:
+					spinFrontCW()
+				else:
+					allStop()
+			elif group_val ==6:
+				if dir_val == 8:
+					spinRearCCW()
+				elif dir_val == 9:
+					spinRearCW()
+				elif dir_val == 0:
+					allStop()
+
+
 
 main()
