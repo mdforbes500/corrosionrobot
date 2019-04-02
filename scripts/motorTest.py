@@ -3,8 +3,8 @@ from adafruit_servokit import ServoKit
 import time
 
 servo_kit = ServoKit(channels=16)
-base_kit = MotorKit() #kit object for first board(CONTROLS BASE MOTORS)
-rotate_kit = MotorKit(address=0x61) #kit object for 2nd board(ROTATE MOTORS)
+base_kit = MotorKit(address=0x61) #kit object for first board(CONTROLS BASE MOTORS)
+rotate_kit = MotorKit() #kit object for 2nd board(ROTATE MOTORS)
 
 #group assignment
 FRONT = 0
