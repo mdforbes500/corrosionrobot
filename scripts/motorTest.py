@@ -225,9 +225,9 @@ def main():
 		servo_motor_select = int(input("SERVO CONTROL OR MOTOR CONTROL...\n\t"\
 			"0 for SERVO\n\t 1 for MOTOR\n\t"\
 			"3 to stop everything\n"))
-		if servo_motor_select = 3:
+		if servo_motor_select == 3:
 			allStop()
-		elif servo_motor_select = 1:
+		elif servo_motor_select == 1:
 			group_val = int(input("Enter what you would like to control...\n\t"\
 				"0 for FRONT_ROTATE\n\t 1 for REAR_ROTATE\n\t"\
 				"2 for BASE\n"))
@@ -256,7 +256,7 @@ def main():
 					allStop()
 			else:
 				 allStop()
-		elif servo_motor_select = 0:
+		elif servo_motor_select == 0:
 			group_val = int(input("Enter what you would like to control...\n\t"\
 				"0 for bottom base front\n\t 1 for bottom base rear\n\t"\
 				"2 for upper front wheels\n\t 3 for upper rear wheels\n\t"\
