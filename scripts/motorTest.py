@@ -272,14 +272,14 @@ def main():
 				allStop()
 
 		elif servo_motor_select == 0:
-			val = char(input("Enter what you would like to control...\n\t"\
+			val = input("Enter what you would like to control...\n\t"\
 				"'a' for BB front extend\n\t 'b' for BB front retract\n\t"\
 				"'c' for BB rear extend\n\t 'd' for BB rear retract\n\t"\
 				"'e' for UF wheels extend\n\t 'f' for UF wheels retract\n\t"\
 				"'g' for UR wheels extend\n\t 'h' for UR wheels retract\n\t"\
 				"'i' for rack extend\n\t 'j' for rack retract\n\t"\
 				"'k' for front SP CW\n\t 'l' for front SP CCW\n\t"\
-				"'m' for rear SP CW\n\t 'n' for rear SP CCW\n\t"))
+				"'m' for rear SP CW\n\t 'n' for rear SP CCW\n\t")
 			if val == 'a':
 				extendBBFront()
 			elif val == 'b':
