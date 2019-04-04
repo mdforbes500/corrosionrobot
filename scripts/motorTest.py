@@ -84,12 +84,14 @@ def stopRear():
 
 #Call to extend the bottom base front wheels
 def extendBBFront():
+	global bb_front_angle
 	new_angle = bb_front_angle + 5
 	servo_kit.servo[bottom_base_front].angle = new_angle
 	bb_front_angle = new_angle
 
 #Call to retract the bottom base front wheels
 def retractBBFront():
+	global bb_front_angle
 	new_angle = bb_front_angle - 5
 	servo_kit.servo[bottom_base_front].angle = new_angle
 	bb_front_angle = new_angle
@@ -99,12 +101,14 @@ def retractBBFront():
 
 #Call to extend the bottom base front wheels
 def extendBBRear():
+	global bb_rear_angle
 	new_angle = bb_rear_angle + 5
 	servo_kit.servo[bottom_base_rear].angle = new_angle
 	bb_rear_angle = new_angle
 
 #Call to retract the bottom base front wheels
 def retractBBRear():
+	global bb_rear_angle
 	new_angle = bb_rear_angle - 5
 	servo_kit.servo[bottom_base_rear].angle = new_angle
 	bb_rear_angle = new_angle
@@ -115,6 +119,7 @@ def retractBBRear():
 
 #call to extend the upper front wheels
 def extendUFront():
+	global upper_front_angle
 	new_angle = upper_front_angle + 10
 	servo_kit.servo[upper_left_front].angle = new_angle
 	servo_kit.servo[upper_right_front].angle = new_angle
@@ -122,6 +127,7 @@ def extendUFront():
 
 #call to retrtact the upper front wheels
 def retractUFront():
+	global upper_front_angle
 	new_angle = upper_front_angle - 10
 	servo_kit.servo[upper_left_front].angle = new_angle
 	servo_kit.servo[upper_right_front].angle = new_angle
@@ -133,6 +139,7 @@ def retractUFront():
 
 #call to extend the upper rear wheels
 def extendURear():
+	global upper_rear_angle
 	new_angle = upper_rear_angle + 10
 	servo_kit.servo[upper_left_rear].angle = new_angle
 	servo_kit.servo[upper_right_rear].angle = new_angle
@@ -140,6 +147,7 @@ def extendURear():
 
 #call to retrtact the upper rear wheels
 def retractURear():
+	global upper_rear_angle
 	new_angle = upper_rear_angle - 10
 	servo_kit.servo[upper_left_rear].angle = new_angle
 	servo_kit.servo[upper_right_rear].angle = new_angle
