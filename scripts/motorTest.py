@@ -255,7 +255,7 @@ def main():
 			val = int(input("Enter what you would like to control...\n\t"\
 				"0 for FRONT_ROTATE CW\n\t 1 for FRONT_ROTATE CCW\n\t"\
 				"2 for REAR_ROTATE CW\n\t 3 for REAR_ROTATE CCW\n\t"\
-				"4 for move forward \n\t 5 for move backward\n\t"\))
+				"4 for move forward \n\t 5 for move backward\n\t"))
 			if val == 0:
 				rotateCW(FRONT)
 			elif val == 1:
@@ -279,7 +279,7 @@ def main():
 				"'g' for UR wheels extend\n\t 'h' for UR wheels retract\n\t"\
 				"'i' for rack extend\n\t 'j' for rack retract\n\t"\
 				"'k' for front SP CW\n\t 'l' for front SP CCW\n\t"\
-				"'m' for rear SP CW\n\t 'n' for rear SP CCW\n\t"\))
+				"'m' for rear SP CW\n\t 'n' for rear SP CCW\n\t"))
 			if val == 'a':
 				extendBBFront()
 			elif val == 'b':
@@ -310,5 +310,5 @@ def main():
 				spinRearCCW()
 
 
-		
+
 main()
