@@ -252,21 +252,21 @@ def main():
 		if servo_motor_select == 3:
 			allStop()
 		elif servo_motor_select == 1:
-			val = int(input("Enter what you would like to control...\n\t"\
-				"0 for FRONT_ROTATE CW\n\t 1 for FRONT_ROTATE CCW\n\t"\
-				"2 for REAR_ROTATE CW\n\t 3 for REAR_ROTATE CCW\n\t"\
-				"4 for move forward \n\t 5 for move backward\n\t"))
-			if val == 0:
+			val = input("Enter what you would like to control...\n\t"\
+				"'a' for FRONT_ROTATE CW\n\t 'b' for FRONT_ROTATE CCW\n\t"\
+				"'c' for REAR_ROTATE CW\n\t 'd' for REAR_ROTATE CCW\n\t"\
+				"'e' for move forward \n\t 'f' for move backward\n\t")
+			if val == 'a':
 				rotateCW(FRONT)
-			elif val == 1:
+			elif val == 'b':
 				rotateCCW(FRONT)
-			elif val == 2:
+			elif val == 'c':
 				rotateCW(REAR)
-			elif val == 3:
+			elif val == 'd':
 				rotateCCW(REAR)
-			elif val == 4:
+			elif val == 'e':
 				moveForward()
-			elif val == 5:
+			elif val == 'f':
 				moveBackward()
 			else:
 				allStop()
