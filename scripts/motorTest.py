@@ -167,6 +167,10 @@ def moveForward():
 	base_kit.motor2.throttle = 0.6
 	base_kit.motor3.throttle = -0.6
 	base_kit.motor4.throttle = -0.6
+	rotate_kit.motor1.throttle = 0.6
+	rotate_kit.motor2.throttle = 0.6
+	rotate_kit.motor3.throttle = -0.6
+	rotate_kit.motor4.throttle = -0.6
 
 #Call to move the robot backward
 def moveBackward():
@@ -174,25 +178,37 @@ def moveBackward():
 	base_kit.motor2.throttle = -0.6
 	base_kit.motor3.throttle = 0.6
 	base_kit.motor4.throttle = 0.6
+	rotate_kit.motor1.throttle = -0.6
+	rotate_kit.motor2.throttle = -0.6
+	rotate_kit.motor3.throttle = 0.6
+	rotate_kit.motor4.throttle = 0.6
+
 
 #rotates the specified group(front or back) clockWise
 def rotateCW(group):
 	if group == 0:
-		rotate_kit.motor1.throttle = 0.6
 		rotate_kit.motor2.throttle = 0.6
-	elif group == 1:
-		rotate_kit.motor3.throttle = 0.6
 		rotate_kit.motor4.throttle = 0.6
+		base_kit.motor2.throttle = -0.6
+		base_kit.motor4.throttle = -0.6
+	elif group == 1:
+		rotate_kit.motor1.throttle = 0.6
+		rotate_kit.motor3.throttle = 0.6
+		base_kit.motor1.throttle = -0.6
+		base_kit.motor3.throttle = -0.6
 
 #rotates the specified group(front or back) counter-clockWise
 def rotateCCW(group):
 	if group == 0:
-		rotate_kit.motor1.throttle = -0.6
 		rotate_kit.motor2.throttle = -0.6
-	elif group == 1:
-		rotate_kit.motor3.throttle = -0.6
 		rotate_kit.motor4.throttle = -0.6
-
+		base_kit.motor2.throttle = 0.6
+		base_kit.motor4.throttle = 0.6
+	elif group == 1:
+		rotate_kit.motor1.throttle = -0.6
+		rotate_kit.motor3.throttle = -0.6
+		base_kit.motor1.throttle = 0.6
+		base_kit.motor3.throttle = 0.6
 #stops the movement of the specified group(front-rotate, rear-rotate, base)
 def stop(group):
 	if group == 0:
@@ -236,92 +252,63 @@ def main():
 		if servo_motor_select == 3:
 			allStop()
 		elif servo_motor_select == 1:
-			group_val = int(input("Enter what you would like to control...\n\t"\
-				"0 for FRONT_ROTATE\n\t 1 for REAR_ROTATE\n\t"\
-				"2 for BASE\n"))
-			dir_val = int(input("Enter the direction to move...\n\t"\
-				"8 for CCW/BACKWARD\n\t, 9 for CW/FORWARD\n"))
-			if group_val == 0:
-				if dir_val == 8:
-					rotateCCW(FRONT)
-				elif dir_val == 9:
-					rotateCW(FRONT)
-				else:
-					allStop()
-			elif group_val == 1:
-				if dir_val == 8:
-					rotateCCW(REAR)
-				elif dir_val == 9:
-					rotateCW(REAR)
-				else:
-					allStop()
-			elif group_val ==2:
-				if dir_val == 8:
-					moveBackward()
-				elif dir_val == 9:
-					moveForward()
-				else:
-					allStop()
+			val = int(input("Enter what you would like to control...\n\t"\
+				"0 for FRONT_ROTATE CW\n\t 1 for FRONT_ROTATE CCW\n\t"\
+				"2 for REAR_ROTATE CW\n\t 3 for REAR_ROTATE CCW\n\t"\
+				"4 for move forward \n\t 5 for move backward\n\t"\))
+			if val == 0:
+				rotateCW(FRONT)
+			elif val == 1:
+				rotateCCW(FRONT)
+			elif val == 2:
+				rotateCW(REAR)
+			elif val == 3:
+				rotateCCW(REAR)
+			elif val == 4:
+				moveForward()
+			elif val == 5:
+				moveBackward()
 			else:
-				 allStop()
+				allStop()
+
 		elif servo_motor_select == 0:
-			group_val = int(input("Enter what you would like to control...\n\t"\
-				"0 for bottom base front\n\t 1 for bottom base rear\n\t"\
-				"2 for upper front wheels\n\t 3 for upper rear wheels\n\t"\
-				"4 for rack servo\n\t 5 for front sensor package servo\n\t"\
-				"6 for rear sensor package servo\n"))
-			dir_val = int(input("Enter the direction...\n\t"\
-				"8 for CCW/RETRACT\n\t, 9 for CW/EXTEND\n"))
-			if group_val == 0:
-				if dir_val == 8:
-					retractBBFront()
-				elif dir_val == 9:
-					extendBBFront()
-				else:
-					allStop()
-			elif group_val == 1:
-				if dir_val == 8:
-					retractBBRear()
-				elif dir_val == 9:
-					extendBBRear()
-				else:
-					allStop()
-			elif group_val ==2:
-				if dir_val == 8:
-					extendUFront()
-				elif dir_val == 9:
-					retractUFront()
-				elif dir_val == 0:
-					allStop()
-			elif group_val == 3:
-				if dir_val == 8:
-					retractURear()
-				elif dir_val == 9:
-					extendURear()
-				else:
-					allStop()
-			elif group_val ==4:
-				if dir_val == 8:
-					extendRack()
-				elif dir_val == 9:
-					retractRack()
-				elif dir_val == 0:
-					allStop()
-			elif group_val == 5:
-				if dir_val == 8:
-					spinFrontCCW()
-				elif dir_val == 9:
-					spinFrontCW()
-				else:
-					allStop()
-			elif group_val ==6:
-				if dir_val == 8:
-					spinRearCCW()
-				elif dir_val == 9:
-					spinRearCW()
-				elif dir_val == 0:
-					allStop()
+			val = char(input("Enter what you would like to control...\n\t"\
+				"'a' for BB front extend\n\t 'b' for BB front retract\n\t"\
+				"'c' for BB rear extend\n\t 'd' for BB rear retract\n\t"\
+				"'e' for UF wheels extend\n\t 'f' for UF wheels retract\n\t"\
+				"'g' for UR wheels extend\n\t 'h' for UR wheels retract\n\t"\
+				"'i' for rack extend\n\t 'j' for rack retract\n\t"\
+				"'k' for front SP CW\n\t 'l' for front SP CCW\n\t"\
+				"'m' for rear SP CW\n\t 'n' for rear SP CCW\n\t"\))
+			if val == 'a':
+				extendBBFront()
+			elif val == 'b':
+				retractBBFront()
+			elif val == 'c':
+				extendBBRear()
+			elif val == 'd':
+				retractBBRear()
+			elif val == 'e':
+				extendUFront()
+			elif val == 'f':
+				retractUFront()
+			elif val == 'g':
+				extendURear()
+			elif val == 'h':
+				retractURear()
+			elif val == 'i':
+				extendRack()
+			elif val == 'j':
+				retractRack()
+			elif val == 'k':
+				spinFrontCW()
+			elif val == 'l':
+				spinFrontCCW()
+			elif val == 'm':
+				spinRearCW()
+			elif val == 'n':
+				spinRearCCW()
 
 
-
+		
 main()
