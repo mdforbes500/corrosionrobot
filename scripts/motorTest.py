@@ -11,6 +11,10 @@ FRONT = 0
 REAR = 1
 BASE = 2
 
+
+#speed control signal
+speed = 1
+
 #Servo Assignment
 bottom_base_front = 0
 bottom_base_rear = 1
@@ -171,52 +175,52 @@ def retractURear():
 
 #Call to move the robot forward
 def moveForward():
-	base_kit.motor1.throttle = -0.6
-	base_kit.motor2.throttle = -0.6
-	base_kit.motor3.throttle = 0.6
-	base_kit.motor4.throttle = 0.6
-	rotate_kit.motor1.throttle = -0.6
-	rotate_kit.motor2.throttle = -0.6
-	rotate_kit.motor3.throttle = 0.6
-	rotate_kit.motor4.throttle = 0.6
+	base_kit.motor1.throttle = -speed
+	base_kit.motor2.throttle = -speed
+	base_kit.motor3.throttle = speed
+	base_kit.motor4.throttle = speed
+	rotate_kit.motor1.throttle = -speed
+	rotate_kit.motor2.throttle = -speed
+	rotate_kit.motor3.throttle = speed
+	rotate_kit.motor4.throttle = speed
 
 #Call to move the robot backward
 def moveBackward():
-	base_kit.motor1.throttle = 0.6
-	base_kit.motor2.throttle = 0.6
-	base_kit.motor3.throttle = -0.6
-	base_kit.motor4.throttle = -0.6
-	rotate_kit.motor1.throttle = 0.6
-	rotate_kit.motor2.throttle = 0.6
-	rotate_kit.motor3.throttle = -0.6
-	rotate_kit.motor4.throttle = -0.6
+	base_kit.motor1.throttle = speed
+	base_kit.motor2.throttle = speed
+	base_kit.motor3.throttle = -speed
+	base_kit.motor4.throttle = -speed
+	rotate_kit.motor1.throttle = speed
+	rotate_kit.motor2.throttle = speed
+	rotate_kit.motor3.throttle = -speed
+	rotate_kit.motor4.throttle = -speed
 
 
 #rotates the specified group(front or back) clockWise
 def rotateCW(group):
 	if group == 0:
-		rotate_kit.motor2.throttle = 0.6
-		rotate_kit.motor4.throttle = 0.6
-		base_kit.motor2.throttle = -0.6
-		base_kit.motor4.throttle = -0.6
+		rotate_kit.motor2.throttle = speed
+		rotate_kit.motor4.throttle = speed
+		base_kit.motor2.throttle = -speed
+		base_kit.motor4.throttle = -speed
 	elif group == 1:
-		rotate_kit.motor1.throttle = 0.6
-		rotate_kit.motor3.throttle = 0.6
-		base_kit.motor1.throttle = -0.6
-		base_kit.motor3.throttle = -0.6
+		rotate_kit.motor1.throttle = speed
+		rotate_kit.motor3.throttle = speed
+		base_kit.motor1.throttle = -speed
+		base_kit.motor3.throttle = -speed
 
 #rotates the specified group(front or back) counter-clockWise
 def rotateCCW(group):
 	if group == 0:
-		rotate_kit.motor2.throttle = -0.6
-		rotate_kit.motor4.throttle = -0.6
-		base_kit.motor2.throttle = 0.6
-		base_kit.motor4.throttle = 0.6
+		rotate_kit.motor2.throttle = -speed
+		rotate_kit.motor4.throttle = -speed
+		base_kit.motor2.throttle = speed
+		base_kit.motor4.throttle = speed
 	elif group == 1:
-		rotate_kit.motor1.throttle = -0.6
-		rotate_kit.motor3.throttle = -0.6
-		base_kit.motor1.throttle = 0.6
-		base_kit.motor3.throttle = 0.6
+		rotate_kit.motor1.throttle = -speed
+		rotate_kit.motor3.throttle = -speed
+		base_kit.motor1.throttle = speed
+		base_kit.motor3.throttle = speed
 #stops the movement of the specified group(front-rotate, rear-rotate, base)
 def stop(group):
 	if group == 0:
