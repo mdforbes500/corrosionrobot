@@ -171,17 +171,6 @@ def retractURear():
 
 #Call to move the robot forward
 def moveForward():
-	base_kit.motor1.throttle = 0.6
-	base_kit.motor2.throttle = 0.6
-	base_kit.motor3.throttle = -0.6
-	base_kit.motor4.throttle = -0.6
-	rotate_kit.motor1.throttle = 0.6
-	rotate_kit.motor2.throttle = 0.6
-	rotate_kit.motor3.throttle = -0.6
-	rotate_kit.motor4.throttle = -0.6
-
-#Call to move the robot backward
-def moveBackward():
 	base_kit.motor1.throttle = -0.6
 	base_kit.motor2.throttle = -0.6
 	base_kit.motor3.throttle = 0.6
@@ -190,6 +179,17 @@ def moveBackward():
 	rotate_kit.motor2.throttle = -0.6
 	rotate_kit.motor3.throttle = 0.6
 	rotate_kit.motor4.throttle = 0.6
+
+#Call to move the robot backward
+def moveBackward():
+	base_kit.motor1.throttle = 0.6
+	base_kit.motor2.throttle = 0.6
+	base_kit.motor3.throttle = -0.6
+	base_kit.motor4.throttle = -0.6
+	rotate_kit.motor1.throttle = 0.6
+	rotate_kit.motor2.throttle = 0.6
+	rotate_kit.motor3.throttle = -0.6
+	rotate_kit.motor4.throttle = -0.6
 
 
 #rotates the specified group(front or back) clockWise
