@@ -37,7 +37,7 @@ def main(args):
     image_gray = cv.cvtColor(image, cv.COLOR_RGB2GRAY)
 #    print(image_gray)
     cv.imshow('Gray image', image_gray)
-    cv.waitKey(0)
+#    cv.waitKey(0)
 
     # Determining the CMOS width and height in pixels
     width = np.size(image_gray, 1) #px
@@ -79,9 +79,9 @@ def main(args):
     CountPixelW = 0
     for y in range(height-1):
         for x in range(width-1):
-            if image_gray[y,x] >= 127:
+            if image_gray[y,x] >= 110:
                 CountPixelW += 1
-            if image_gray[y,x] < 127:
+            if image_gray[y,x] < 110:
                 CountPixelB += 1
 
     #Total corroded area in frame
