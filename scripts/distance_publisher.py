@@ -20,8 +20,8 @@ myargs = rp.myargv(argv=sys.argv)
 
 def distance_publisher(trig_pin=myargs[1], echo_pin=myargs[2]):
     GPIO.setmode(GPIO.BCM)
-    GPIO_TRIGGER = trig_pin
-    GPIO_ECHO = echo_pin
+    GPIO_TRIGGER = int(trig_pin)
+    GPIO_ECHO = int(echo_pin)
 
     GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
     GPIO.setup(GPIO_ECHO, GPIO.IN)
