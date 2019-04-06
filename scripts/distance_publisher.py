@@ -17,19 +17,16 @@ from std_msgs.msg import String
 import sys
 
 myargs = rp.myargv(argv=sys.argv)
+
+GPIO.setmode(GPIO.BCM)
+
 GPIO_TRIGGER=int(myargs[1])
 GPIO_ECHO=int(myargs[2])
 
+GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
+GPIO.setup(GPIO_ECHO, GPIO.IN)
+
 def distance_publisher():
-    GPIO.setmode(GPIO.BCM)
-    global GPIO_TRIGGER
-    print GPIO_TRIGGER
-    global GPIO_ECHO
-    print GPIO_ECHO
-
-    GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
-    GPIO.setup(GPIO_ECHO, GPIO.IN)
-
     pub = rp.Publisher('distance', String, queue_size=10)
     rp.init_node('ultrasonic', anonymous=True)
     rate = rp.Rate(10)   #10 Hz
