@@ -29,8 +29,7 @@ def callback2(data):
     cv.waitKey(5)
 
 def callback3(data):
-    rp.loginfo('recieving distance to end of pipe %s',
-     data.data)
+    rp.loginfo('recieving distance to end of pipe %s', data.data)
 
 def callback4(data):
     rp.loginfo('recieving distance to front target %s', data.data)
