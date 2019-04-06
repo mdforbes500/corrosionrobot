@@ -17,13 +17,14 @@ from std_msgs.msg import String
 import sys
 
 myargs = rp.myargv(argv=sys.argv)
+GPIO_TRIGGER=myargs[1]
+GPIO_ECHO=myargs[2]
 
-
-def distance_publisher(trig_pin=myargs[1], echo_pin=myargs[2]):
+def distance_publisher():
     GPIO.setmode(GPIO.BCM)
-    GPIO_TRIGGER = int(trig_pin)
+    global GPIO_TRIGGER
     print GPIO_TRIGGER
-    GPIO_ECHO = int(echo_pin)
+    global GPIO_ECHO
     print GPIO_ECHO
 
     GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
