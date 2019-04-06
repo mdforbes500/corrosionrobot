@@ -14,17 +14,20 @@
 import rospy as rp
 import RPi.GPIO as GPIO
 from std_msgs.msg import String
+import sys
 
-GPIO.setmode(GPIO.BCM)
-GPIO_TRIGGER = 18
-GPIO_ECHO = 24
+myargs = rp.myargv(argv=sys.argv)
 
-GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
-GPIO.setup(GPIO_ECHO, GPIO.IN)
+def distance_publisher(trig_pin=args[1], echo_pin=args[2]):
+    GPIO.setmode(GPIO.BCM)
+    GPIO_TRIGGER = trig_pin
+    GPIO_ECHO = echo_pin
 
-def distance_publisher():
+    GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
+    GPIO.setup(GPIO_ECHO, GPIO.IN)
+
     pub = rp.Publisher('distance', String, queue_size=10)
-    rp.init_node('ultrasonic', anonymous=False)
+    rp.init_node('ultrasonic', anonymous=True)
     rate = rp.Rate(10)   #10 Hz
 
     while not rp.is_shutdown():
