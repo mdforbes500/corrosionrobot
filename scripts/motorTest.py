@@ -127,23 +127,29 @@ def retractBBRear():
 
 #call to extend the upper front wheels
 def extendUFront():
-	global upper_front_angle
-	if upper_front_angle < 180:
+	global UL_front_angle
+	global UR_front_angle
+	if UL_front_angle < 180:
 		new_angle = UL_front_angle + 10
 		new_angle2 = UR_front_angle - 10
 		servo_kit.servo[upper_left_front].angle = new_angle
-		servo_kit.servo[upper_right_front].angle = new_angle
-		upper_front_angle = new_angle
+		servo_kit.servo[upper_right_front].angle = new_angle2
+		UL_front_angle = new_angle
+		UR_front_angle = new_angle2
 
 #call to retrtact the upper front wheels
 #random
 def retractUFront():
-	global upper_front_angle
-	if upper_front_angle > 0:
-		new_angle = upper_front_angle - 10
+	global UL_front_angle
+	global UR_front_angle
+	if UL_front_angle > 0:
+		new_angle = UL_front_angle - 10
+		new_angle2 = UR_front_angle + 10
 		servo_kit.servo[upper_left_front].angle = new_angle
-		servo_kit.servo[upper_right_front].angle = new_angle
-		upper_front_angle = new_angle
+		servo_kit.servo[upper_right_front].angle = new_angle2
+		UL_front_angle = new_angle
+		UR_front_angle = new_angle2
+
 
 
 
@@ -151,21 +157,27 @@ def retractUFront():
 
 #call to extend the upper rear wheels
 def extendURear():
-	global upper_rear_angle
-	if upper_rear_angle < 180:
-		new_angle = upper_rear_angle + 10
+	global UL_rear_angle
+	global UR_rear_angle
+	if UL_rear_angle < 180:
+		new_angle = UR_rear_angle + 10
+		new_angle2 = UL_rear_angle - 10
 		servo_kit.servo[upper_left_rear].angle = new_angle
-		servo_kit.servo[upper_right_rear].angle = new_angle
-		upper_rear_angle = new_angle
+		servo_kit.servo[upper_right_rear].angle = new_angle2
+		UL_rear_angle = new_angle
+		UR_rear_angle = new_angle2
 
 #call to retrtact the upper rear wheels
 def retractURear():
-	global upper_rear_angle
-	if upper_rear_angle > 0:
-		new_angle = upper_rear_angle - 10
+	global UL_rear_angle
+	global UR_rear_angle
+	if UL_rear_angle > 0:
+		new_angle = UL_rear_angle - 10
+		new_angle2 = UR_rear_angle + 10
 		servo_kit.servo[upper_left_rear].angle = new_angle
-		servo_kit.servo[upper_right_rear].angle = new_angle
-		upper_rear_angle = new_angle
+		servo_kit.servo[upper_right_rear].angle = new_angle2
+		UL_rear_angle = new_angle
+		UR_rear_angle = new_angle2
 
 
 
