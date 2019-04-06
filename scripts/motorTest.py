@@ -16,12 +16,12 @@ BASE = 2
 speed = 1
 
 #Servo Assignment
-bottom_base_front = 0
-bottom_base_rear = 1
-upper_left_front = 2
-upper_right_front = 3
-upper_left_rear = 4
-upper_right_rear = 5
+bottom_base_front = int(0)
+bottom_base_rear = int(1)
+upper_left_front = int(2)
+upper_right_front = int(3)
+upper_left_rear = int(4)
+upper_right_rear = int(5)
 #continuous servo assignement
 rack_servo = 6
 front_package = 7
@@ -136,7 +136,7 @@ def extendUFront():
 		upper_front_angle = new_angle
 
 #call to retrtact the upper front wheels
-#random 
+#random
 def retractUFront():
 	global upper_front_angle
 	if upper_front_angle > 0:
