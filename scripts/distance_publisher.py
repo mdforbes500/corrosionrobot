@@ -17,8 +17,8 @@ from std_msgs.msg import String
 import sys
 
 myargs = rp.myargv(argv=sys.argv)
-GPIO_TRIGGER=myargs[1]
-GPIO_ECHO=myargs[2]
+GPIO_TRIGGER=int(myargs[1])
+GPIO_ECHO=int(myargs[2])
 
 def distance_publisher():
     GPIO.setmode(GPIO.BCM)
