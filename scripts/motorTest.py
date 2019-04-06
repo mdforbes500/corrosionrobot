@@ -30,12 +30,12 @@ rear_package = 8
 #variables used for the angles of the 180 degree servos
 bb_front_angle = 90
 bb_rear_angle = 90
-# ul_front_angle = 90
-# ur_front_angle = 90
-upper_front_angle = 90
-# ul_rear_angle = 90
-# ur_rear_angle = 90
-upper_rear_angle = 90
+UL_front_angle = 90
+UR_front_angle = 90
+# upper_front_angle = 90
+UL_rear_angle = 90
+UR_rear_angle = 90
+# upper_rear_angle = 90
 
 #####################RACK SERVO CODE####################################
 #call to extend the rack
