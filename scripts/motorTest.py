@@ -129,12 +129,14 @@ def retractBBRear():
 def extendUFront():
 	global upper_front_angle
 	if upper_front_angle < 180:
-		new_angle = upper_front_angle + 10
+		new_angle = UL_front_angle + 10
+		new_angle2 = UR_front_angle - 10
 		servo_kit.servo[upper_left_front].angle = new_angle
 		servo_kit.servo[upper_right_front].angle = new_angle
 		upper_front_angle = new_angle
 
 #call to retrtact the upper front wheels
+#random 
 def retractUFront():
 	global upper_front_angle
 	if upper_front_angle > 0:
@@ -256,6 +258,14 @@ def allStop():
 
 
 def main():
+	servo_kit.servo[bottom_base_front].angle = 90
+	servo_kit.servo[bottom_base_rear].angle = 90
+	servo_kit.servo[upper_left_front].angle = 90
+	servo_kit.servo[upper_right_front].angle = 90
+	servo_kit.servo[upper_left_rear].angle = 90
+	servo_kit.servo[upper_right_rear].angle = 90
+
+
 	var = 1
 	while var == 1:
 		servo_motor_select = int(input("SERVO CONTROL OR MOTOR CONTROL...\n\t"\
