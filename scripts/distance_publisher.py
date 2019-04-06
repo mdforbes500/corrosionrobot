@@ -16,12 +16,12 @@ import RPi.GPIO as GPIO
 from std_msgs.msg import String
 import sys
 
-#myargs = rp.myargv(argv=sys.argv)
+myargs = rp.myargv(argv=sys.argv)
 
 GPIO.setmode(GPIO.BCM)
 
-GPIO_TRIGGER = 18
-GPIO_ECHO = 24
+GPIO_TRIGGER = int(myargs[1])
+GPIO_ECHO = int(myargs[2])
 
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
