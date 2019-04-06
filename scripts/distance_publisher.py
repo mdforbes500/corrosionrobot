@@ -18,10 +18,13 @@ import sys
 
 myargs = rp.myargv(argv=sys.argv)
 
+
 def distance_publisher(trig_pin=myargs[1], echo_pin=myargs[2]):
     GPIO.setmode(GPIO.BCM)
     GPIO_TRIGGER = int(trig_pin)
+    print GPIO_TRIGGER
     GPIO_ECHO = int(echo_pin)
+    print GPIO_ECHO
 
     GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
     GPIO.setup(GPIO_ECHO, GPIO.IN)
