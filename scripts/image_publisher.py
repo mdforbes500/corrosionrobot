@@ -12,6 +12,7 @@
 
 import rospy as rp
 import imutils
+import numpy as np
 from imutils.video import FileVideoStream
 from imutils.video import FPS
 import time
@@ -32,6 +33,9 @@ def cv_publisher(index=myargs[1]):
     while not rp.is_shutdown():
         while fvs.more():
             frame = fvs.read()
+            frame = imutils.resize(frame, width=450)
+            frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+            frame = np.dstack([frame,frame,frame])
             rp.loginfo('publish image')
             pub.publish(br.cv2_to_imgmsg(frame))
             rate.sleep()
