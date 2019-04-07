@@ -3,6 +3,7 @@ from adafruit_servokit import ServoKit
 import time
 
 servo_kit = ServoKit(channels=16)
+servo_kit_c = ServoKit(channels=16,address=0x42)
 base_kit = MotorKit(address=0x61) #kit object for first board(CONTROLS BASE MOTORS)
 rotate_kit = MotorKit() #kit object for 2nd board(ROTATE MOTORS)
 
@@ -40,15 +41,15 @@ UR_rear_angle = 90
 #####################RACK SERVO CODE####################################
 #call to extend the rack
 def extendRack():
-	servo_kit.continuous_servo[rack_servo].throttle = 1
+	servo_kit_c.continuous_servo[rack_servo].throttle = 1
 
 #call to retract the rack
 def retractRack():
-	servo_kit.continuous_servo[rack_servo].throttle = -1
+	servo_kit_c.continuous_servo[rack_servo].throttle = -1
 
 #call to stop the rack from moving
 def stopRack():
-	servo_kit.continuous_servo[rack_servo].throttle = 0
+	servo_kit_c.continuous_servo[rack_servo].throttle = 0
 
 
 
@@ -56,15 +57,15 @@ def stopRack():
 
 #call to rotate front sensor package CLOCKWISE
 def spinFrontCW():
-	servo_kit.continuous_servo[front_package].throttle = 1
+	servo_kit_c.continuous_servo[front_package].throttle = 1
 
 #call to rotate front sensor package COUNTER-CLOCKWISE
 def spinFrontCCW():
-	servo_kit.continuous_servo[front_package].throttle = -1
+	servo_kit_c.continuous_servo[front_package].throttle = -1
 
 #call to stop the front sensor package from spinning
 def stopFront():
-	servo_kit.continuous_servo[front_package].throttle = 0
+	servo_kit_c.continuous_servo[front_package].throttle = 0
 
 
 
@@ -72,15 +73,15 @@ def stopFront():
 
 #call to rotate rear sensor package CLOCKWISE
 def spinRearCW():
-	servo_kit.continuous_servo[rear_package].throttle = 1
+	servo_kit_c.continuous_servo[rear_package].throttle = 1
 
 #call to rotate front sensor package COUNTER-CLOCKWISE
 def spinRearCCW():
-	servo_kit.continuous_servo[rear_package].throttle = -1
+	servo_kit_c.continuous_servo[rear_package].throttle = -1
 
 #call to stop the front sensor package from spinning
 def stopRear():
-	servo_kit.continuous_servo[rear_package].throttle = 0
+	servo_kit_c.continuous_servo[rear_package].throttle = 0
 
 
 
