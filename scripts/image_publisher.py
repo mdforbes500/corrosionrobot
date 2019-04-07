@@ -27,10 +27,10 @@ import sys
 myargs = rp.myargv(argv=sys.argv)
 
 def cv_publisher(index=myargs[1]):
-    # ap = argparse.ArgumentParser()
-    # ap.add_argument("-v","--video",required=True,help="path to input video file")
-    # args = vars(ap.parse_args())
-    fvs = FileVideoStream(int(index)).start()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-v","--video",required=True,help="path to input video file")
+    args = vars(ap.parse_args())
+    fvs = FileVideoStream(args["video"]).start()
     time.sleep(1)
     pub = rp.Publisher('image_raw', Image, queue_size=10)
     rp.init_node('camera_driver', anonymous=False)
