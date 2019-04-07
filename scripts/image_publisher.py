@@ -11,9 +11,9 @@
 #----------------------------------------#
 
 import rospy as rp
+import imutils
 from imutils.video import FileVideoStream
 from imutils.video import FPS
-import imutils
 import time
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
