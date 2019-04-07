@@ -24,7 +24,7 @@ import sys
 myargs = rp.myargv(argv=sys.argv)
 
 def cv_publisher(index=myargs[1]):
-    fvs = FileVideoStream(index).start()
+    fvs = FileVideoStream(int(index)).start()
     time.sleep(1)
     pub = rp.Publisher('image_raw', Image, queue_size=10)
     rp.init_node('camera_driver', anonymous=False)
