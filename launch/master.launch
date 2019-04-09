@@ -1,8 +1,8 @@
 <!--master.launch-->
 <launch>
   <node
-    pkg="image_view"
-    type="stereo_view"
-    name="image_sub">
+    pkg="corrosion_robot"
+    type="system_subscriber.py"
+    name="controller">
   </node>
 </launch>

@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   message_filters
   cv_bridge
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -58,11 +59,10 @@ find_package(OpenCV REQUIRED)
 # )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+ add_service_files(
+   FILES
+   FindArea.srv
+ )
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -109,7 +109,15 @@ find_package(OpenCV REQUIRED)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES corrosion_robot
-CATKIN_DEPENDS roscpp rospy std_msgs sensor_msgs image_transport message_filters cv_bridge
+CATKIN_DEPENDS
+  roscpp
+  rospy
+  std_msgs
+  sensor_msgs
+  image_transport
+  message_filters
+  cv_bridge
+  message_runtime
 #  DEPENDS system_lib
 )
 
@@ -119,9 +127,9 @@ CATKIN_DEPENDS roscpp rospy std_msgs sensor_msgs image_transport message_filters
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(
+# include_directories(
 # include
-  ${catkin_INCLUDE_DIRS}
+#  ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -137,8 +145,8 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(image_publisher src/image_publisher.cpp)
-add_executable(system_subscriber src/system_subscriber.cpp)
+# add_executable(image_publisher src/image_publisher.cpp)
+# add_executable(system_subscriber src/system_subscriber.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -151,14 +159,14 @@ add_executable(system_subscriber src/system_subscriber.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(image_publisher
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBS}
-)
-target_link_libraries(system_subscriber
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBS}
-)
+# target_link_libraries(image_publisher
+#   ${catkin_LIBRARIES}
+#   ${OpenCV_LIBS}
+# )
+# target_link_libraries(system_subscriber
+#   ${catkin_LIBRARIES}
+#   ${OpenCV_LIBS}
+# )
 
 #############
 ## Install ##
