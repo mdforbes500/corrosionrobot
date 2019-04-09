@@ -74,7 +74,7 @@ def stopFront():
 
 #call to rotate rear sensor package CLOCKWISE
 def spinRearCW():
-	servo_kit_c.continuous_servo[rear_package].throttle = -01.1
+	servo_kit_c.continuous_servo[rear_package].throttle = -0.11
 
 #call to rotate front sensor package COUNTER-CLOCKWISE
 def spinRearCCW():
