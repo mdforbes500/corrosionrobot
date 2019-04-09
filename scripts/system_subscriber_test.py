@@ -25,7 +25,6 @@ def callback1(data):
     if k%256 == 27:
         # ESC key is pressed
         print("Escape pressed, closing...")
-        break
     elif k%256 == 32:
         # SPACE pressed
         img_name = "site_{}.png".format(0)
