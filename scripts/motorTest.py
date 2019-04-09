@@ -315,7 +315,8 @@ def main():
 				"'g' for UR wheels extend\n\t 'h' for UR wheels retract\n\t"\
 				"'i' for rack extend\n\t 'j' for rack retract\n\t"\
 				"'k' for front SP CW\n\t 'l' for front SP CCW\n\t"\
-				"'m' for rear SP CW\n\t 'n' for rear SP CCW\n\t")
+				"'m' for rear SP CW\n\t 'n' for rear SP CCW\n\t"\
+				"'t' for Image Analysis and Area Computation\n\t")
 			if val == 'a':
 				extendBBFront()
 			elif val == 'b':
@@ -344,6 +345,8 @@ def main():
 				spinRearCW()
 			elif val == 'n':
 				spinRearCCW()
+			elif val == 't':
+				image_proc2.main()
 
 
 

@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   message_filters
   cv_bridge
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -58,11 +59,10 @@ find_package(OpenCV REQUIRED)
 # )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+ add_service_files(
+   FILES
+   FindArea.srv
+ )
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -109,7 +109,15 @@ find_package(OpenCV REQUIRED)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES corrosion_robot
-CATKIN_DEPENDS roscpp rospy std_msgs sensor_msgs image_transport message_filters cv_bridge
+CATKIN_DEPENDS
+  roscpp
+  rospy
+  std_msgs
+  sensor_msgs
+  image_transport
+  message_filters
+  cv_bridge
+  message_runtime
 #  DEPENDS system_lib
 )
 
