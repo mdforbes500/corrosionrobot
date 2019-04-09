@@ -19,7 +19,8 @@ import cv2 as cv
 def callback1(data):
     br = CvBridge()
     rp.loginfo('recieving front image')
-    cv.imshow('camera_driver', br.imgmsg_to_cv2(data))
+    frame = br.imgmsg_to_cv2(data)
+    cv.imshow('camera_driver', frame)
     k = cv.waitKey(1)
 
     if k%256 == 27:
