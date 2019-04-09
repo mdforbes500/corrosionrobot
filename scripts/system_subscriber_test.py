@@ -28,8 +28,9 @@ def callback1(data):
         print("Escape pressed, closing...")
     elif k%256 == 32:
         # SPACE pressed
+        path = "~/Pictures"
         img_name = "site_{}.png".format(0)
-        cv.imwrite(img_name, frame)
+        cv.imwrite(os.path.join(path , img_name), frame)
         print("{} captured!".format(img_name))
 
 def callback2(data):
