@@ -53,11 +53,11 @@ def callback6(data):
 def system_listener():
     rp.init_node('listener', anonymous=False)
     rp.Subscriber('image_raw', Image, callback1)
-    rp.Subscriber('image_raw', Image, callback2)
-    rp.Subscriber('distance', String, callback3)
-    rp.Subscriber('distance', String, callback4)
-    rp.Subscriber('distance', String, callback5)
-    rp.Subscriber('distance', String, callback6)
+    #rp.Subscriber('image_raw', Image, callback2)
+    #rp.Subscriber('distance', String, callback3)
+    #rp.Subscriber('distance', String, callback4)
+    #rp.Subscriber('distance', String, callback5)
+    #rp.Subscriber('distance', String, callback6)
     rp.spin()
     cv.destroyAllWindows()
 
