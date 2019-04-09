@@ -46,7 +46,7 @@ def extendRack():
 
 #call to retract the rack
 def retractRack():
-	servo_kit_c.continuous_servo[rack_servo].throttle = -0.16
+	servo_kit_c.continuous_servo[rack_servo].throttle = -0.18
 
 #call to stop the rack from moving
 def stopRack():
@@ -58,11 +58,11 @@ def stopRack():
 
 #call to rotate front sensor package CLOCKWISE
 def spinFrontCW():
-	servo_kit_c.continuous_servo[front_package].throttle = .12
+	servo_kit_c.continuous_servo[front_package].throttle = .1
 
 #call to rotate front sensor package COUNTER-CLOCKWISE
 def spinFrontCCW():
-	servo_kit_c.continuous_servo[front_package].throttle = -0.14
+	servo_kit_c.continuous_servo[front_package].throttle = -0.12
 
 #call to stop the front sensor package from spinning
 def stopFront():
@@ -74,11 +74,11 @@ def stopFront():
 
 #call to rotate rear sensor package CLOCKWISE
 def spinRearCW():
-	servo_kit_c.continuous_servo[rear_package].throttle = 0.09
+	servo_kit_c.continuous_servo[rear_package].throttle = 0.07
 
 #call to rotate front sensor package COUNTER-CLOCKWISE
 def spinRearCCW():
-	servo_kit_c.continuous_servo[rear_package].throttle = -0.14
+	servo_kit_c.continuous_servo[rear_package].throttle = -0.1
 
 #call to stop the front sensor package from spinning
 def stopRear():
