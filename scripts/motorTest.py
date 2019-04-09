@@ -58,11 +58,11 @@ def stopRack():
 
 #call to rotate front sensor package CLOCKWISE
 def spinFrontCW():
-	servo_kit_c.continuous_servo[front_package].throttle = .08
+	servo_kit_c.continuous_servo[front_package].throttle = 0
 
 #call to rotate front sensor package COUNTER-CLOCKWISE
 def spinFrontCCW():
-	servo_kit_c.continuous_servo[front_package].throttle = -0.15
+	servo_kit_c.continuous_servo[front_package].throttle = -0.13
 
 #call to stop the front sensor package from spinning
 def stopFront():
@@ -74,11 +74,11 @@ def stopFront():
 
 #call to rotate rear sensor package CLOCKWISE
 def spinRearCW():
-	servo_kit_c.continuous_servo[rear_package].throttle = 0.04
+	servo_kit_c.continuous_servo[rear_package].throttle = 0
 
 #call to rotate front sensor package COUNTER-CLOCKWISE
 def spinRearCCW():
-	servo_kit_c.continuous_servo[rear_package].throttle = -0.15
+	servo_kit_c.continuous_servo[rear_package].throttle = -0.13
 
 #call to stop the front sensor package from spinning
 def stopRear():
