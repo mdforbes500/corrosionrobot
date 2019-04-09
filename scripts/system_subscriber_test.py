@@ -28,7 +28,7 @@ def callback1(data):
         print("Escape pressed, closing...")
     elif k%256 == 32:
         # SPACE pressed
-        img_name = "~/Pictures/site_{}.png".format(0)
+        img_name = "site_images/site_{}.png".format(0)
         cv.imwrite(img_name, frame)
         print("{} captured!".format(img_name))
 
