@@ -130,7 +130,7 @@ def retractBBRear():
 def extendUFront():
 	global UL_front_angle
 	global UR_front_angle
-	if UL_front_angle < 180:
+	if UL_front_angle < 130:
 		new_angle = UL_front_angle + 10
 		new_angle2 = UR_front_angle + 10
 		servo_kit.servo[upper_left_front].angle = new_angle
@@ -143,7 +143,7 @@ def extendUFront():
 def retractUFront():
 	global UL_front_angle
 	global UR_front_angle
-	if UL_front_angle > 0:
+	if UL_front_angle > 50:
 		new_angle = UL_front_angle - 10
 		new_angle2 = UR_front_angle - 10
 		servo_kit.servo[upper_left_front].angle = new_angle
