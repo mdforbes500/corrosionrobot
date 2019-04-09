@@ -160,7 +160,7 @@ def retractUFront():
 def extendURear():
 	global UL_rear_angle
 	global UR_rear_angle
-	if UL_rear_angle < 180:
+	if UL_rear_angle < 130:
 		new_angle = UR_rear_angle + 10
 		new_angle2 = UL_rear_angle + 10
 		servo_kit.servo[upper_left_rear].angle = new_angle
@@ -172,7 +172,7 @@ def extendURear():
 def retractURear():
 	global UL_rear_angle
 	global UR_rear_angle
-	if UL_rear_angle > 0:
+	if UL_rear_angle > 50:
 		new_angle = UL_rear_angle - 10
 		new_angle2 = UR_rear_angle - 10
 		servo_kit.servo[upper_left_rear].angle = new_angle
