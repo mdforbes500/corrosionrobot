@@ -15,7 +15,6 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import String
 from cv_bridge import CvBridge
 import cv2 as cv
-import os
 
 def callback1(data):
     br = CvBridge()
@@ -29,9 +28,8 @@ def callback1(data):
         print("Escape pressed, closing...")
     elif k%256 == 32:
         # SPACE pressed
-        path = "~/Pictures"
-        img_name = "site_{}.png".format(0)
-        cv.imwrite(os.path.join(path , img_name), frame)
+        img_name = "~/Pictures/site_{}.png".format(0)
+        cv.imwrite(img_name, frame)
         print("{} captured!".format(img_name))
 
 def callback2(data):
