@@ -1,6 +1,7 @@
 from adafruit_motorkit import MotorKit
 from adafruit_servokit import ServoKit
 import time
+import image_proc2.py
 
 servo_kit = ServoKit(channels=16)
 servo_kit_c = ServoKit(channels=16,address=0x42)
