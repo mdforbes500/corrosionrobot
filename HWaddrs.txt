@@ -1,3 +1,6 @@
 For Raspberry Pi 3B+ MAC address:
+  Front: b8:27:eb:8d:6b:0e
 
-Front: b8:27:eb:8d:6b:0e
+For Master-control interface:
+  Interface name: enxa0cec8c7d2c1
+  MAC Address: a0:ce:c8:c7:d2:c1
