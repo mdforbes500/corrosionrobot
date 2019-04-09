@@ -41,7 +41,7 @@ UR_rear_angle = 90
 #####################RACK SERVO CODE####################################
 #call to extend the rack
 def extendRack():
-	servo_kit_c.continuous_servo[rack_servo].throttle = 0.1
+	servo_kit_c.continuous_servo[rack_servo].throttle = 0.05
 
 #call to retract the rack
 def retractRack():
@@ -49,7 +49,7 @@ def retractRack():
 
 #call to stop the rack from moving
 def stopRack():
-	servo_kit_c.continuous_servo[rack_servo].throttle = 0.03
+	servo_kit_c.continuous_servo[rack_servo].throttle = -0.03
 
 
 
@@ -73,11 +73,11 @@ def stopFront():
 
 #call to rotate rear sensor package CLOCKWISE
 def spinRearCW():
-	servo_kit_c.continuous_servo[rear_package].throttle = 0.1
+	servo_kit_c.continuous_servo[rear_package].throttle = -0.04
 
 #call to rotate front sensor package COUNTER-CLOCKWISE
 def spinRearCCW():
-	servo_kit_c.continuous_servo[rear_package].throttle = -0.1
+	servo_kit_c.continuous_servo[rear_package].throttle = -0.12
 
 #call to stop the front sensor package from spinning
 def stopRear():
