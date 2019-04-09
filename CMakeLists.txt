@@ -127,9 +127,9 @@ CATKIN_DEPENDS
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(
+# include_directories(
 # include
-  ${catkin_INCLUDE_DIRS}
+#  ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -159,14 +159,14 @@ include_directories(
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(image_publisher
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBS}
-)
-target_link_libraries(system_subscriber
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBS}
-)
+# target_link_libraries(image_publisher
+#   ${catkin_LIBRARIES}
+#   ${OpenCV_LIBS}
+# )
+# target_link_libraries(system_subscriber
+#   ${catkin_LIBRARIES}
+#   ${OpenCV_LIBS}
+# )
 
 #############
 ## Install ##
