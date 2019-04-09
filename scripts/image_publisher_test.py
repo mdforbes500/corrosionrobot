@@ -30,18 +30,7 @@ def cv_publisher():
         if ret == True:
             rp.loginfo('publish image')
             pub.publish(br.cv2_to_imgmsg(frame))
-        k = cv.waitKey(1)
 
-        if k%256 == 27:
-            # ESC key is pressed
-            print("Escape pressed, closing...")
-            break
-        elif k%256 == 32:
-            # SPACE pressed
-            img_name = "site_{}.png".format(img_counter)
-            cv2.imwrite(img_name, frame)
-            print("{} written!".format(img_name))
-            img_counter += 1
         rate.sleep()
 
 if __name__ == '__main__':

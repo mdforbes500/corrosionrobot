@@ -22,19 +22,15 @@ def callback1(data):
     cv.imshow('camera_driver', br.imgmsg_to_cv2(data))
     k = cv.waitKey(1)
 
-    img_counter = 0
-
-    while True:
-        if k%256 == 27:
-            # ESC key is pressed
-            print("Escape pressed, closing...")
-            break
-        elif k%256 == 32:
-            # SPACE pressed
-            img_name = "site_{}.png".format(img_counter)
-            cv2.imwrite(img_name, frame)
-            print("{} captured!".format(img_name))
-            img_counter += 1
+    if k%256 == 27:
+        # ESC key is pressed
+        print("Escape pressed, closing...")
+        break
+    elif k%256 == 32:
+        # SPACE pressed
+        img_name = "site_{}.png".format(0)
+        cv2.imwrite(img_name, frame)
+        print("{} captured!".format(img_name))
 
 def callback2(data):
     br = CvBridge()
