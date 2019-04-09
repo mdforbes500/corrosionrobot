@@ -28,7 +28,7 @@ def callback1(data):
     elif k%256 == 32:
         # SPACE pressed
         img_name = "site_{}.png".format(0)
-        cv2.imwrite(img_name, frame)
+        cv.imwrite(img_name, frame)
         print("{} captured!".format(img_name))
 
 def callback2(data):
