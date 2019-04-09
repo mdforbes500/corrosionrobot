@@ -15,7 +15,6 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   message_filters
   cv_bridge
-  cv_camera
 )
 
 ## System dependencies are found with CMake's conventions
@@ -110,7 +109,7 @@ find_package(OpenCV REQUIRED)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES corrosion_robot
-CATKIN_DEPENDS roscpp rospy std_msgs sensor_msgs image_transport message_filters cv_bridge cv_camera
+CATKIN_DEPENDS roscpp rospy std_msgs sensor_msgs image_transport message_filters cv_bridge
 #  DEPENDS system_lib
 )
 
