@@ -25,7 +25,6 @@
   <build_export_depend>message_filters</build_export_depend>
   <build_export_depend>opencv3</build_export_depend>
   <build_export_depend>cv_bridge</build_export_depend>
-  <build_export_depend>cv_camera</build_export_depend>
 
   <!-- Build upon Compiling -->
   <!--   <build_depend>example_package</build_depend> -->
@@ -37,7 +36,6 @@
   <build_depend>message_filters</build_depend>
   <build_depend>opencv3</build_depend>
   <build_depend>cv_bridge</build_depend>
-  <build_depend>cv_camera</build_depend>
 
   <!-- Build for Runtime -->
   <!--   <exec_depend>example_package</exec_depend> -->
@@ -49,7 +47,6 @@
   <exec_depend>message_filters</exec_depend>
   <exec_depend>opencv3</exec_depend>
   <exec_depend>cv_bridge</exec_depend>
-  <exec_depend>cv_camera</exec_depend>
 
   <!-- Testing Packages -->
   <!--   <test_depend>example_package</test_depend> -->
