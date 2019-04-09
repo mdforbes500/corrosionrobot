@@ -41,7 +41,7 @@ UR_rear_angle = 90
 #####################RACK SERVO CODE####################################
 #call to extend the rack
 def extendRack():
-	servo_kit_c.continuous_servo[rack_servo].throttle = 0.08
+	servo_kit_c.continuous_servo[rack_servo].throttle = 0.1
 
 #call to retract the rack
 def retractRack():
