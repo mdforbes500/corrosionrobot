@@ -33,7 +33,7 @@ def main(args):
     b,g,r=cv.split(image)
     #image_red = image[:,:,2]
     #image_gray = cv.cvtColor(r, cv.COLOR_RGB2GRAY)
-    #blurred = cv.GaussianBlur(image_gray, (11, 11), 0)
+    blurred = cv.GaussianBlur(r, (11, 11), 0)
     cv.imshow("Gaussian Filtering", r)
     cv.waitKey(0)
     cv.destroyWindow("Gaussian Filtering")
