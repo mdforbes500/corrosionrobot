@@ -15,16 +15,21 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import String
 from cv_bridge import CvBridge
 import cv2 as cv
+import numpy as np
 import os
 
 def callback1(data):
     br = CvBridge()
     rp.loginfo('Recieving front image')
     frame = br.imgmsg_to_cv2(data)
+
+    #Add crosshairs to frame
     height = np.size(frame, 0)
     width = np.size(frame, 1)
     cv.line(frame,(width/2-2,height/2),(width/2+2,height/2),(255,255,255),2)
     cv.line(frame,(width/2,height/2+2),(width/2,height/2-2),(255,255,255),2)
+
+    #Display frames
     cv.imshow('Front Video Feed', frame)
     k = cv.waitKey(1)
 
