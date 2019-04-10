@@ -13,9 +13,7 @@
 #----------------------------------------#
 
 from __future__ import division
-from PIL import Image
-from PIL import ImageFilter
-import pylab as plt
+from skimage import measure
 import cv2 as cv
 import numpy as np
 import math
@@ -29,27 +27,106 @@ def main(args):
     print("Distance from object: {0} cm".format(distance))
 
     #Opening filehandle for reading and saving in memory as grayscale image
+    # then applying gaussian blur to smooth image boundaries
     image = cv.imread(filehandle)
     image_gray = cv.cvtColor(image, cv.COLOR_RGB2GRAY)
-    ret, corrosion_thresh = cv.threshold(image_gray,32,255,0)
-    ret2, coating_thresh = cv.threshold(image_gray, 127,255,0)
-    cv.imshow('Gray image', image_gray)
-    cv.waitKey(0)
-    cv.imshow('Corrosion Threshold image', corrosion_thresh)
-    cv.waitKey(0)
-    cv.imshow('Coating Threshold image', coating_thresh)
-    cv.waitKey(0)
+    blurred = cv.GaussianBlur(image_gray, (11, 11), 0)
 
-    corrosion_contours,hierarchy = cv2.findContours(corrosion_thresh, 1, 2)
-    coating_contours,hierarchy = cv2.findContours(coating_thresh, 1, 2)
-    cnt = contours[0]
+    #===============================CORROSION=================================#
+    #Softening threshold values to again lower noisy edges
+    ret,corrosion_thresh = cv.threshold(blurred,40,255,0)
+    corrosion_thresh = cv.erode(corrosion_thresh, None, iterations=2)
+    corrosion_thresh = cv.dilate(corrosion_thresh, None, iterations=4)
+    corrosion_thresh = cv.bitwise_not(corrosion_thresh) #reverse colors
 
-    rect = cv2.minAreaRect(cnt)
-    box = cv2.boxPoints(rect)
-    box = np.int0(box)
-    im = cv2.drawContours(im,[box],0,(0,0,255),2)
+    # perform a connected component analysis on the thresholded
+    # image, then initialize a mask to store only the "large"
+    # components
+    corrosion_labels = measure.label(corrosion_thresh, neighbors=8, background=0)
+    corrosion_mask = np.zeros(corrosion_thresh.shape, dtype="uint8")
 
-    # Determining the CMOS width and height in pixels
+    # loop over the unique components
+    for corrosion_label in np.unique(corrosion_labels):
+        #if this is the background label, ignore it
+        if corrosion_label == 0:
+            continue
+
+	# otherwise, construct the label mask and count the
+	# number of pixels
+    corrosion_label_mask = np.zeros(corrosion_thresh.shape, dtype="uint8")
+    corrosion_label_mask[corrosion_labels == corrosion_label] = 255
+    num_pixels = cv.countNonZero(corrosion_label_mask)
+
+    # if the number of pixels in the component is sufficiently
+    # large, then add it to our mask of "large blobs"
+    if num_pixels > 300:
+        corrosion_mask = cv.add(corrosion_mask, corrosion_label_mask)
+
+    cv.imshow('Corrosion Threshold image', corrosion_mask)
+    cv.waitKey(0)
+    cv.destroyWindow('Corrosion Threshold image')
+
+    (corrosion_contours,heirarchy_c)= cv.findContours(corrosion_mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+    cnt_c = corrosion_contours[0]
+    x_c,y_c,w_c,h_c = cv.boundingRect(cnt_c)
+    print("Corrosion width is: {0}\nCorrosion height is: {1}".format(w_c, h_c))
+
+    #Plot bounding box
+    rect_c = cv.minAreaRect(cnt_c)
+    box_c = cv.boxPoints(rect_c)
+    box_c = np.int0(box_c)
+    im_corrosion = cv.drawContours(image,[box_c],0,(0,0,255),2)
+    cv.imshow('Corrosion Contours', im_corrosion)
+    cv.waitKey(0)
+    cv.destroyWindow('Corrosion Contours')
+
+    #===============================COATING===================================#
+    ret2,coating_thresh = cv.threshold(blurred,127,255,0)
+    coating_thresh = cv.erode(coating_thresh, None, iterations=2)
+    coating_thresh = cv.dilate(coating_thresh, None, iterations=4)
+    coating_thresh = cv.bitwise_not(coating_thresh) #reverse colors
+
+    # perform a connected component analysis on the thresholded
+    # image, then initialize a mask to store only the "large"
+    # components
+    coating_labels = measure.label(coating_thresh, neighbors=8, background=0)
+    coating_mask = np.zeros(coating_thresh.shape, dtype="uint8")
+
+    # loop over the unique components
+    for coating_label in np.unique(coating_labels):
+        #if this is the background label, ignore it
+        if coating_label == 0:
+            continue
+
+	# otherwise, construct the label mask and count the
+	# number of pixels
+    coating_label_mask = np.zeros(coating_thresh.shape, dtype="uint8")
+    coating_label_mask[coating_labels == coating_label] = 255
+    num_pixels = cv.countNonZero(coating_label_mask)
+
+    # if the number of pixels in the component is sufficiently
+    # large, then add it to our mask of "large blobs"
+    if num_pixels > 300:
+        coating_mask = cv.add(coating_mask, coating_label_mask)
+
+    cv.imshow('Coating Threshold image', coating_mask)
+    cv.waitKey(0)
+    cv.destroyWindow('Coating Threshold image')
+
+    (coating_contours, heirarchy_ct) = cv.findContours(coating_mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+    cnt_ct = coating_contours[0]
+    x_ct,y_ct,w_ct,h_ct = cv.boundingRect(cnt_ct)
+    print("Coating width is: {0}\nCoating height is: {1}".format(w_ct, h_ct))
+
+    #Plot bounding box
+    rect_ct = cv.minAreaRect(cnt_ct)
+    box_ct = cv.boxPoints(rect_ct)
+    box_ct = np.int0(box_ct)
+    im_coating = cv.drawContours(image,[box_ct],0,(0,0,255),2)
+    cv.imshow('Coating Contours', im_coating)
+    cv.waitKey(0)
+    cv.destroyWindow('Coating Contours')
+    #===========================Length Computation============================#
     width = np.size(image_gray, 1) #px
     height = np.size(image_gray, 0) #px
 
@@ -64,27 +141,14 @@ def main(args):
     px_width = distance*math.tan(math.radians(w_angle)) #cm
     px_height = distance*math.tan(math.radians(h_angle)) #cm
 
-    #Image width and height in cm
-    image_width = px_width*width #cm
-    image_height = px_height*height #cm
+    #Computation of width and height of corrosion anamoly
+    corrosion_width = px_width*w_c/2.54
+    corrosion_height = px_height*h_c/2.54
+    print("Corrosion width is: {0}\nCorrosion height is: {1}".format(corrosion_width, corrosion_height))
 
-    #Area of a single pixel
-    pixel_area = px_width*px_height #cm^2
-
-    #Counting total number of corroded pixels
-    deviation = int(np.std(image))
-    counter = width*height
-    CountPixelB = 0
-    CountPixelW = 0
-    for y in range(height-1):
-        for x in range(width-1):
-            if image_gray[y,x] >= 127:
-                CountPixelW += 1
-            if image_gray[y,x] < 127:
-                CountPixelB += 1
-
-    #Total corroded area in frame
-    corrosion_area = pixel_area*CountPixelB
-    print("Total Area of Corrosion: {0:.{1}f} cm^2".format(corrosion_area,3))
+    #Computation of width and height of coating damage
+    coating_width = px_width*w_ct/2.54
+    coating_height = px_height*h_ct/2.54
+    print("Coating width is: {0}\nCoating height is: {1}".format(coating_width, coating_height))
 
 main(sys.argv)
