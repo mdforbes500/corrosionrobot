@@ -31,7 +31,7 @@ def main(args):
     #Opening filehandle for reading and saving in memory as grayscale image
     image = cv.imread(filehandle)
     image_gray = cv.cvtColor(image, cv.COLOR_RGB2GRAY)
-    ret, corrosion_thresh = cv.threshold(image_gray,127,255,0)
+    ret, corrosion_thresh = cv.threshold(image_gray,32,255,0)
     ret2, coating_thresh = cv.threshold(image_gray, 127,255,0)
     cv.imshow('Gray image', image_gray)
     cv.waitKey(0)
