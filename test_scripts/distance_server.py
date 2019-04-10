@@ -13,6 +13,7 @@
 
 import rospy as rp
 import RPi.GPIO as GPIO
+from corrosion_robot.srv import *
 from std_msgs.msg import String
 import sys
 
@@ -26,34 +27,36 @@ GPIO_ECHO = int(myargs[2])
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 
-def distance_publisher():
-    pub = rp.Publisher('distance', String, queue_size=10)
-    rp.init_node('ultrasonic', anonymous=True)
-    rate = rp.Rate(10)   #10 Hz
+def handle_get_distance():
+    GPIO.output(GPIO_TRIGGER, True)
+    rate.sleep()
+    GPIO.output(GPIO_TRIGGER, False)
 
-    while not rp.is_shutdown():
-        GPIO.output(GPIO_TRIGGER, True)
-        rate.sleep()
-        GPIO.output(GPIO_TRIGGER, False)
+    start_time = rp.get_time()
+    stop_time = rp.get_time()
 
+    while GPIO.input(GPIO_ECHO) == 0:
         start_time = rp.get_time()
+
+    while GPIO.input(GPIO_ECHO) == 1:
         stop_time = rp.get_time()
 
-        while GPIO.input(GPIO_ECHO) == 0:
-            start_time = rp.get_time()
+    time_elapsed = stop_time - start_time
+    distance = (time_elapsed * 34300)/2
+    distance_str = "%s" % distance
 
-        while GPIO.input(GPIO_ECHO) == 1:
-            stop_time = rp.get_time()
+    return distance_str
 
-        time_elapsed = stop_time - start_time
-        distance = (time_elapsed * 34300)/2
-        distance_str = "%s" % distance
-        rp.loginfo(distance_str)
-        pub.publish(distance_str)
-        rate.sleep()
+    rate.sleep()
+
+def distance_server():
+    rp.init_node('ultrasonic')
+    serv = rp.Service('get_distance', SetSonar, handle_get_distance)
+    print("Ready to find distance...")
+    rospy.spin()
 
 if __name__ == '__main__':
     try:
-        distance_publisher()
+        distance_server()
     except rp.ROSInterruptException:
         GPIO.cleanup()
