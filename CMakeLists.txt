@@ -61,7 +61,7 @@ find_package(OpenCV REQUIRED)
 ## Generate services in the 'srv' folder
  add_service_files(
    FILES
-   AnomaloyReport.srv
+   AnomalyReport.srv
    SetSonar.srv
  )
 
