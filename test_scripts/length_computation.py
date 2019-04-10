@@ -30,7 +30,8 @@ def main(args):
     #Opening filehandle for reading and saving in memory as grayscale image
     # then applying gaussian blur to smooth image boundaries
     image = cv.imread(filehandle)
-    image_gray = cv.cvtColor(image, cv.COLOR_RGB2GRAY)
+    image_red = image[:,:,2]
+    image_gray = cv.cvtColor(image_red, cv.COLOR_RGB2GRAY)
     blurred = cv.GaussianBlur(image_gray, (11, 11), 0)
     cv.imshow("Gaussian Filtering", blurred)
     cv.waitKey(0)
