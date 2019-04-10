@@ -34,16 +34,28 @@ def main(args):
     #image_red = image[:,:,2]
     #image_gray = cv.cvtColor(r, cv.COLOR_RGB2GRAY)
     blurred = cv.GaussianBlur(r, (11, 11), 0)
-    cv.imshow("Gaussian Filtering", r)
+    cv.imshow("Gaussian Filtering", blurred)
     cv.waitKey(0)
     cv.destroyWindow("Gaussian Filtering")
 
     #===============================CORROSION=================================#
     #Softening threshold values to again lower noisy edges
     ret,corrosion_thresh = cv.threshold(blurred,127,255,0)
+    cv.imshow("Gray Threshold", corrosion_thresh)
+    cv.waitKey(0)
+    cv.destroyWindow("Gaussian Filtering")
     corrosion_thresh = cv.erode(corrosion_thresh, None, iterations=2)
+    cv.imshow("Gray Threshold", corrosion_thresh)
+    cv.waitKey(0)
+    cv.destroyWindow("Gaussian Filtering")
     corrosion_thresh = cv.dilate(corrosion_thresh, None, iterations=4)
+    cv.imshow("Gray Threshold", corrosion_thresh)
+    cv.waitKey(0)
+    cv.destroyWindow("Gaussian Filtering")
     corrosion_thresh = cv.bitwise_not(corrosion_thresh) #reverse colors
+    cv.imshow("Gray Threshold", corrosion_thresh)
+    cv.waitKey(0)
+    cv.destroyWindow("Gaussian Filtering")
 
     # perform a connected component analysis on the thresholded
     # image, then initialize a mask to store only the "large"
