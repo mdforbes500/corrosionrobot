@@ -22,10 +22,6 @@ import math
 import sys
 
 def main(args):
-    """
-    Takes the filehandle of the image and the distance supplied by the user and
-    calculates the area of the corroded site.
-    """
     #Inputs from system arguments
     filehandle = args[1]
     print("Opening and processing '{0}'...".format(filehandle))
@@ -35,14 +31,27 @@ def main(args):
     #Opening filehandle for reading and saving in memory as grayscale image
     image = cv.imread(filehandle)
     image_gray = cv.cvtColor(image, cv.COLOR_RGB2GRAY)
+    ret, corrosion_thresh = cv.threshold(image_gray,127,255,0)
+    ret2, coating_thresh = cv.threshold(image_gray, 127,255,0)
     cv.imshow('Gray image', image_gray)
     cv.waitKey(0)
+    cv.imshow('Corrosion Threshold image', corrosion_thresh)
+    cv.waitKey(0)
+    cv.imshow('Coating Threshold image', coating_thresh)
+    cv.waitKey(0)
+
+    corrosion_contours,hierarchy = cv2.findContours(corrosion_thresh, 1, 2)
+    coating_contours,hierarchy = cv2.findContours(coating_thresh, 1, 2)
+    cnt = contours[0]
+
+    rect = cv2.minAreaRect(cnt)
+    box = cv2.boxPoints(rect)
+    box = np.int0(box)
+    im = cv2.drawContours(im,[box],0,(0,0,255),2)
 
     # Determining the CMOS width and height in pixels
     width = np.size(image_gray, 1) #px
-    print("Width of image is : {} pixels".format(width))
     height = np.size(image_gray, 0) #px
-    print("Height of image is : {} pixels".format(height))
 
     # Field of View for PiCamera V2
     FOV = (62.2, 48.8) #deg: horizontal X vertical
@@ -53,15 +62,11 @@ def main(args):
 
     #Width and Height of one pixel in cm
     px_width = distance*math.tan(math.radians(w_angle)) #cm
-    print("Width of a single pixel is {0:.4f} cm".format(px_width))
     px_height = distance*math.tan(math.radians(h_angle)) #cm
-    print("Height of a single pixel is {0:.4f} cm".format(px_height))
 
     #Image width and height in cm
     image_width = px_width*width #cm
-    print("Image width: {0:.{1}f} cm".format(image_width,3))
     image_height = px_height*height #cm
-    print("Image height: {0:.{1}f} cm".format(image_height,3))
 
     #Area of a single pixel
     pixel_area = px_width*px_height #cm^2
@@ -80,14 +85,6 @@ def main(args):
 
     #Total corroded area in frame
     corrosion_area = pixel_area*CountPixelB
-
-    sides = math.sqrt(corrosion_area)
-    adj = math.sqrt(distance**2 - sides**2/4)
-    theta = 2*math.atan(sides/(2*adj))
-    arclength = distance*theta
-    adjusted_area = arclength*image_width
-
     print("Total Area of Corrosion: {0:.{1}f} cm^2".format(corrosion_area,3))
-#    print("Adjusted area with curvature: {0:.{1}f} cm^2".format(adjusted_area,3))
 
 main(sys.argv)
