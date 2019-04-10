@@ -30,11 +30,28 @@ def main(args):
     #Opening filehandle for reading and saving in memory as grayscale image
     # then applying gaussian blur to smooth image boundaries
     image = cv.imread(filehandle)
-    b,g,r=cv.split(image)
-    #image_red = image[:,:,2]
-    #image_gray = cv.cvtColor(r, cv.COLOR_RGB2GRAY)
-    blurred = cv.GaussianBlur(r, (11, 11), 0)
-    cv.imshow("Gaussian Filtering", blurred)
+    cv.imshow("image", image)
+    cv.waitKey(0)
+    cv.destroyWindow("image")
+    image_ycb = cv.cvtColor(image, cv.COLOR_BGR2YCrCb)
+    cv.imshow("image_ycb", image_ycb)
+    cv.waitKey(0)
+    cv.destroyWindow("image_ycb")
+    y,c,b = cv.split(image_ycb)
+
+    # define range of red color in HSV
+    #lower_red = np.array([46,25,15])
+    #upper_red = np.array([53,80,60])
+
+    # Threshold the HSV image to get only red colors
+    #mask = cv.inRange(image_ycb, lower_red, upper_red)
+
+    # Bitwise-AND mask and original image
+    #blurred = cv.GaussianBlur(mask, (11, 11), 0)
+    cv.imshow("Coating Damage", b)
+    cv.waitKey(0)
+    cv.destroyWindow("Coating Damage")
+    cv.imshow("Gaussian Filtering", c)
     cv.waitKey(0)
     cv.destroyWindow("Gaussian Filtering")
 
