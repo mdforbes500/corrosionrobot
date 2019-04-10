@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 #----------------------------------------#
-# @title: distance_publisher.py
+# @title: distance_service.py
 #
 # @author: Malcolm D. Forbes
 # @email: gmucorrosion@gmail.com
-# @version: v.0.1.0
+# @version: v.0.2.0
 #
 # @licsense: MIT
-# @description: Publishes the distance of the ultrasonic sensor
+# @description: Serves the distance of the ultrasonic sensor
 #----------------------------------------#
 
 import rospy as rp

@@ -5,7 +5,7 @@
 #
 # @author: Malcolm D. Forbes
 # @email: gmucorrosion@gmail.com
-# @version: v.0.1.0
+# @version: v.0.1.1
 #
 # @licsense: MIT
 #----------------------------------------#

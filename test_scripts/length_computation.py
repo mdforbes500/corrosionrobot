@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 
 #----------------------------------------#
-# @title: image_proc2.py
+# @title: length_computation.py
 #
-# @author: Joseph Hawkey & Malcolm D. Forbes
+# @author: Malcolm D. Forbes & Joseph Hawkey
 # @email: gmucorrosion@gmail.com
-# @version: v.0.2.1
+# @version: v.0.3.4
 #
 # @licsense: MIT
-# @description: When given an image of corrosion, returns the area of
-# the corrosion.
+# @description: When given an image of corrosion, filters it for corrosion,
+# and determines the width and height of the corrosive area, as well as
+# the centroid.
 #----------------------------------------#
 
 from __future__ import division
