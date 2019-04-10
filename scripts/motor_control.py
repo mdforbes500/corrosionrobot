@@ -264,9 +264,9 @@ def allStop():
 	rotate_kit.motor2.throttle = 0
 	rotate_kit.motor3.throttle = 0
 	rotate_kit.motor4.throttle = 0
-	servo_kit_c.continuous_servo[rack_servo].throttle = -0.04
-	servo_kit_c.continuous_servo[front_package].throttle = -0.08
-	servo_kit_c.continuous_servo[rear_package].throttle = -0.02
+	servo_kit_c.continuous_servo[rack_servo].throttle = 0.00
+	servo_kit_c.continuous_servo[front_package].throttle = 0.00
+	servo_kit_c.continuous_servo[rear_package].throttle = 0.00
 
 
 
