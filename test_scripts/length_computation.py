@@ -69,7 +69,7 @@ def main(args):
     cv.imshow('Corrosion Threshold image', corrosion_mask)
     cv.waitKey(0)
     cv.destroyWindow('Corrosion Threshold image')
-    if (cv.__version__ == 3.3.1):
+    if (cv.__version__ == "3.3.0"):
         (_,corrosion_contours,heirarchy_c)= cv.findContours(corrosion_mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
     else:
         (corrosion_contours,heirarchy_c)= cv.findContours(corrosion_mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
@@ -120,7 +120,7 @@ def main(args):
     cv.waitKey(0)
     cv.destroyWindow('Coating Threshold image')
 
-    if (cv.__version__ == 3.3.1):
+    if (cv.__version__ == "3.3.0"):
         (_,coating_contours, heirarchy_ct) = cv.findContours(coating_mask, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE)
     else:
         (coating_contours, heirarchy_ct) = cv.findContours(coating_mask, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE)
