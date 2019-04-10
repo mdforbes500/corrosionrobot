@@ -29,7 +29,6 @@ GPIO.setup(GPIO_ECHO, GPIO.IN)
 
 def handle_get_distance():
     GPIO.output(GPIO_TRIGGER, True)
-    rate.sleep()
     GPIO.output(GPIO_TRIGGER, False)
 
     start_time = rp.get_time()
@@ -44,10 +43,7 @@ def handle_get_distance():
     time_elapsed = stop_time - start_time
     distance = (time_elapsed * 34300)/2
     distance_str = "%s" % distance
-
     return distance_str
-
-    rate.sleep()
 
 def distance_server():
     rp.init_node('ultrasonic')
