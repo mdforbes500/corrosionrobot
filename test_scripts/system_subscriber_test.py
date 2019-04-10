@@ -21,6 +21,9 @@ def callback1(data):
     br = CvBridge()
     rp.loginfo('Recieving front image')
     frame = br.imgmsg_to_cv2(data)
+    width, height = cv.GetSize(frame)
+    cv.line(frame,(0,0),(0,0),(255,255,255),2)
+    cv.line(frame,(0,0),(511,511),(255,255,255),2)
     cv.imshow('Front Video Feed', frame)
     k = cv.waitKey(1)
 

@@ -32,6 +32,9 @@ def main(args):
     image = cv.imread(filehandle)
     image_gray = cv.cvtColor(image, cv.COLOR_RGB2GRAY)
     blurred = cv.GaussianBlur(image_gray, (11, 11), 0)
+    cv.imshow("Gaussian Filtering", blurred)
+    cv.waitKey(0)
+    cv.destroyWindow("Gaussian Filtering")
 
     #===============================CORROSION=================================#
     #Softening threshold values to again lower noisy edges
@@ -84,8 +87,9 @@ def main(args):
     #===============================COATING===================================#
     ret2,coating_thresh = cv.threshold(blurred,127,255,0)
     coating_thresh = cv.erode(coating_thresh, None, iterations=2)
-    coating_thresh = cv.dilate(coating_thresh, None, iterations=4)
+    coating_thresh = cv.dilate(coating_thresh, None, iterations=2)
     coating_thresh = cv.bitwise_not(coating_thresh) #reverse colors
+    #coating_thresh = cv.bitwise_not(coating_thresh)
 
     # perform a connected component analysis on the thresholded
     # image, then initialize a mask to store only the "large"
@@ -114,7 +118,7 @@ def main(args):
     cv.waitKey(0)
     cv.destroyWindow('Coating Threshold image')
 
-    (coating_contours, heirarchy_ct) = cv.findContours(coating_mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+    (coating_contours, heirarchy_ct) = cv.findContours(coating_mask, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE)
     cnt_ct = coating_contours[0]
     x_ct,y_ct,w_ct,h_ct = cv.boundingRect(cnt_ct)
     print("Coating width is: {0}\nCoating height is: {1}".format(w_ct, h_ct))
@@ -145,12 +149,12 @@ def main(args):
     #Computation of width and height of corrosion anamoly
     corrosion_width = px_width*w_c/2.54
     corrosion_height = px_height*h_c/2.54
-    print("Corrosion width is: {0}\nCorrosion height is: {1}".format(corrosion_width, corrosion_height))
+    print("Corrosion width is: {0.3}\nCorrosion height is: {1.3}".format(corrosion_width, corrosion_height))
 
     #Computation of width and height of coating damage
     coating_width = px_width*w_ct/2.54
     coating_height = px_height*h_ct/2.54
-    print("Coating width is: {0}\nCoating height is: {1}".format(coating_width, coating_height))
+    print("Coating width is: {0.3}\nCoating height is: {1.3}".format(coating_width, coating_height))
 
 if __name__ == "__main__":
     main(sys.argv)
