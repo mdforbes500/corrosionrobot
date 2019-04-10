@@ -152,4 +152,5 @@ def main(args):
     coating_height = px_height*h_ct/2.54
     print("Coating width is: {0}\nCoating height is: {1}".format(coating_width, coating_height))
 
-main(sys.argv)
+if __name__ == "__main__":
+    main(sys.argv)
