@@ -40,7 +40,7 @@ def callback1(data):
     elif k%256 == 32:
         # SPACE pressed
         print("Saving file...")
-        img_name = input("Save as: ")
+        img_name = "site_0.png"
         path = os.path.join(os.path.expanduser("~"), "Pictures", img_name)
         cv.imwrite(path, frame)
         print("{0} saved at {1}".format(img_name, path))
