@@ -38,7 +38,7 @@ def main(args):
 
     #===============================CORROSION=================================#
     #Softening threshold values to again lower noisy edges
-    ret,corrosion_thresh = cv.threshold(blurred,40,255,0)
+    ret,corrosion_thresh = cv.threshold(blurred,127,255,0)
     corrosion_thresh = cv.erode(corrosion_thresh, None, iterations=2)
     corrosion_thresh = cv.dilate(corrosion_thresh, None, iterations=4)
     corrosion_thresh = cv.bitwise_not(corrosion_thresh) #reverse colors
