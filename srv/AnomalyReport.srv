@@ -1,0 +1,10 @@
+Image picture
+int64 radial_dist
+int64 long_dist
+---
+int64 corrosion_height
+int64 corrosion_width
+int64 coating_width
+int64 coating_height
+int64 reported_dist
+String anomaly
