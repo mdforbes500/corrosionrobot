@@ -19,7 +19,10 @@ import sys
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
+GPIO.setup(6,GPIO.OUT)
 GPIO.setup(12,GPIO.OUT)
+GPIO.setup(13,GPIO.OUT)
+GPIO.setup(16,GPIO.OUT)
 
 def cv_publisher():
 
@@ -33,17 +36,25 @@ def cv_publisher():
 
     while not rp.is_shutdown():
         #turn on led at BCM pin 12
+        GPIO.output(6,GPIO.HIGH)
         GPIO.output(12,GPIO.HIGH)
+        GPIO.output(13,GPIO.HIGH)
+        GPIO.output(16,GPIO.HIGH)
         [ret, frame] = cap.read()
         if ret == True:
             rp.loginfo('publish image')
             pub.publish(br.cv2_to_imgmsg(frame))
 
         rate.sleep()
+
+    GPIO.output(6,GPIO.LOW)
     GPIO.output(12,GPIO.LOW)
+    GPIO.output(13,GPIO.LOW)
+    GPIO.output(16,GPIO.LOW)
 
 if __name__ == '__main__':
     try:
         cv_publisher()
     except rp.ROSInterruptException:
+        GPIO.cleanup()
         pass
