@@ -40,7 +40,7 @@ def cv_publisher():
             pub.publish(br.cv2_to_imgmsg(frame))
 
         rate.sleep()
-    GPIO.output(18,GPIO.LOW)
+    GPIO.output(12,GPIO.LOW)
 
 if __name__ == '__main__':
     try:
