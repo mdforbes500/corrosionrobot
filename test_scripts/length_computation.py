@@ -168,7 +168,7 @@ def main(args):
     distance = float(args[2]) #cm
     print("Distance from object: {0} cm".format(distance))
     val = int(args[3])
-    print("Threshold value is set at: {}".format(val))
+    print("Threshold value is set at: {} (recommended around 80)".format(val))
     inverted = bool(args[4])
     print("Inverse filtering: {}".format(inverted))
 
