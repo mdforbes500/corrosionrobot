@@ -167,6 +167,10 @@ def main(args):
     print("Opening and processing '{0}'...".format(filehandle))
     distance = float(args[2]) #cm
     print("Distance from object: {0} cm".format(distance))
+    val = int(args[3])
+    print("Threshold value is set at: {}".format(val))
+    inverted = bool(args[4])
+    print("Inverse filtering: {}".format(inverted))
 
     #Opening filehandle for reading and saving in memory
     image = cv.imread(filehandle)
@@ -174,7 +178,7 @@ def main(args):
     cv.waitKey(0)
     cv.destroyWindow("Raw Image")
 
-    filtered = gray_filter(image, thresh=80, inverse=True)
+    filtered = gray_filter(image, thresh=val, inverse=inverted)
     #cb_blur = YCrCb_filter(image, channel='Cb', thresh=127)
     characteristics = connected_component(filtered, image)
 
