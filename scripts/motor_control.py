@@ -1,7 +1,10 @@
+#!/usr/bin/env python
+
 from adafruit_motorkit import MotorKit
 from adafruit_servokit import ServoKit
 import time
-# import image_proc2.py
+
+##############################GLOBAL VARIABLES#################################
 
 servo_kit = ServoKit(channels=16)
 servo_kit_c = ServoKit(channels=16,address=0x42)
@@ -12,7 +15,6 @@ rotate_kit = MotorKit() #kit object for 2nd board(ROTATE MOTORS)
 FRONT = 0
 REAR = 1
 BASE = 2
-
 
 #speed control signal
 speed = 1
