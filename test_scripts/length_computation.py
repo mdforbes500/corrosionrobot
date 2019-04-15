@@ -21,7 +21,7 @@ import math
 import imutils
 import sys
 
-def compute_length(image, w, h, d):
+def compute_length(image, w, h, s, d, z, front):
     # Field of View for PiCamera V2
     FOV = (62.2, 48.8) #deg: horizontal X vertical
 
@@ -40,7 +40,13 @@ def compute_length(image, w, h, d):
     real_width = px_width*w/2.54
     real_height = px_height*h/2.54
 
-    return real_width, real_height
+    #Ouptut the offset distance in inches
+    if front == True:
+        displacement = (px_width*s + z)/2.54
+    else:
+        displacement = (px_width*s + z + 77)/2.54
+
+    return real_width, real_height, displacement
 
 def connected_component(image, raw_image):
     #corrosion_thresh = cv.bitwise_not(corrosion_thresh) #reverse colors
@@ -83,13 +89,16 @@ def connected_component(image, raw_image):
         box = cv.boxPoints(rect)
         box = np.int0(box)
         im = cv.drawContours(raw_image,[box],0,(0,0,255),2)
-        # add width and height to characteristics
-        characteristics.append([w,h])
+
         # compute the center of the contour area and draw a circle
         # representing the center
         M = cv.moments(cnt)
         cX = int(M["m10"] / M["m00"])
+        d = 480/2-cX
         cY = int(M["m01"] / M["m00"])
+
+        # add width and height to characteristics
+        characteristics.append([w,h,d])
 
         # draw the countour number on the image
         cv.putText(raw_image, "#{}".format(i), (cX - 20, cY), cv.FONT_HERSHEY_SIMPLEX,
@@ -167,10 +176,14 @@ def main(args):
     print("Opening and processing '{0}'...".format(filehandle))
     distance = float(args[2]) #cm
     print("Distance from object: {0} cm".format(distance))
-    val = int(args[3])
+    localization = float(args[3])
+    print("Distance from front of pipe: {0} cm".format(localization))
+    val = int(args[4])
     print("Threshold value is set at: {} (recommended around 80)".format(val))
-    inverted = bool(args[4])
+    inverted = bool(args[5])
     print("Inverse filtering: {}".format(inverted))
+    front = bool(args[6])
+    print("Using front sensing package: {}".format(front))
 
     #Opening filehandle for reading and saving in memory
     image = cv.imread(filehandle)
@@ -184,11 +197,15 @@ def main(args):
 
     anomalies = []
     for index, anomaly in enumerate(characteristics):
-        width_corrosion, height_corrosion = compute_length(image, anomaly[0], anomaly[1], distance)
-        anomalies.append([width_corrosion, height_corrosion])
+        if front == True:
+            width_corrosion, height_corrosion, displacement = compute_length(image, anomaly[0], anomaly[1], anomaly[2], distance, localization, sensing=True)
+        else:
+            width_corrosion, height_corrosion, displacement = compute_length(image, anomaly[0], anomaly[1], anomaly[2], distance, localization, sensing=False)
+        anomalies.append([width_corrosion, height_corrosion, displacement])
         print("Site {0}:".format(index))
         print("Corrosion width: {0:.3f} in.".format(width_corrosion))
-        print("Corrosion height: {0:.3f}in.".format(height_corrosion))
+        print("Corrosion height: {0:.3f} in.".format(height_corrosion))
+        print("Corrosion displacement: {0:.3f} px".format(displacement))
 
 if __name__ == "__main__":
     main(sys.argv)
