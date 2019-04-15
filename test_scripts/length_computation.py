@@ -21,7 +21,7 @@ import math
 import imutils
 import sys
 
-def compute_length(image, w, h, s, d, z, front):
+def compute_length(image, w, h, s, d, z, mode):
     # Field of View for PiCamera V2
     FOV = (62.2, 48.8) #deg: horizontal X vertical
 
@@ -41,10 +41,10 @@ def compute_length(image, w, h, s, d, z, front):
     real_height = px_height*h/2.54
 
     #Ouptut the offset distance in inches
-    if front == True:
-        displacement = (px_width*s + z)/2.54
-    else:
-        displacement = (px_width*s + z + 77)/2.54
+    displacement = (px_width*s + z)/2.54
+    if mode is True:
+        #If adding the robot's length
+        displacement = displacement + 24 #inches
 
     return real_width, real_height, displacement
 
@@ -110,12 +110,12 @@ def connected_component(image, raw_image):
 
     return characteristics
 
-def gray_filter(image, thresh=127, inverse=False):
+def gray_filter(image, thresh, inverse):
     gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
     blurred = cv.GaussianBlur(gray, (11, 11), 0)
     # threshold the image to reveal light regions in the
     # blurred image
-    if inverse == True:
+    if inverse == 'black':
         thresh = cv.threshold(blurred, thresh, 255, cv.THRESH_BINARY_INV)[1]
     else:
         thresh = cv.threshold(blurred, thresh, 255, cv.THRESH_BINARY)[1]
@@ -171,41 +171,65 @@ def YCrCb_filter(image, channel='cb', thresh=127):
     return threshold
 
 def main(args):
+    #Try to run main from sys arguments
+    try:
     #Inputs from system arguments
-    filehandle = args[1]
-    print("Opening and processing '{0}'...".format(filehandle))
-    distance = float(args[2]) #cm
-    print("Distance from object: {0} cm".format(distance))
-    localization = float(args[3])
-    print("Distance from front of pipe: {0} cm".format(localization))
-    val = int(args[4])
-    print("Threshold value is set at: {} (recommended around 80)".format(val))
-    inverted = bool(args[5])
-    print("Inverse filtering: {}".format(inverted))
-    front = bool(args[6])
-    print("Using front sensing package: {}".format(front))
+        filehandle = args[1]
+        print("\nOpening and processing '{0}'...".format(filehandle))
+        distance = float(args[2]) #cm
+        print("Distance from object: {0} cm".format(distance))
+        localization = float(args[3])
+        print("Distance from front of pipe: {0} cm".format(localization))
+        val = int(args[4])
+        print("Threshold value is set at: {} (recommended around 80)".format(val))
+        inverted = str(args[5])
+        if not (inverted == 'black' or inverted == 'white'):
+            print("Please enter 'black' or 'white'.")
+            sys.exit(1)
+        print("Inverse filtering: {}".format(inverted))
+        mode = str(args[6])
+        if not (mode == 'on' or mode == 'off'):
+            print("Please enter 'on' or 'off'.")
+            sys.exit(1)
+        print("Add length of robot: {}".format(mode))
 
-    #Opening filehandle for reading and saving in memory
-    image = cv.imread(filehandle)
-    cv.imshow("Raw Image", image)
-    cv.waitKey(0)
-    cv.destroyWindow("Raw Image")
+        #Opening filehandle for reading and saving in memory
+        image = cv.imread(filehandle)
+        cv.imshow("Raw Image", image)
+        cv.waitKey(0)
+        cv.destroyWindow("Raw Image")
 
-    filtered = gray_filter(image, thresh=val, inverse=inverted)
-    #cb_blur = YCrCb_filter(image, channel='Cb', thresh=127)
-    characteristics = connected_component(filtered, image)
+        filtered = gray_filter(image, val, inverted)
+        #cb_blur = YCrCb_filter(image, channel='Cb', thresh=127)
+        characteristics = connected_component(filtered, image)
 
-    anomalies = []
-    for index, anomaly in enumerate(characteristics):
-        if front == True:
-            width_corrosion, height_corrosion, displacement = compute_length(image, anomaly[0], anomaly[1], anomaly[2], distance, localization, sensing=True)
-        else:
-            width_corrosion, height_corrosion, displacement = compute_length(image, anomaly[0], anomaly[1], anomaly[2], distance, localization, sensing=False)
-        anomalies.append([width_corrosion, height_corrosion, displacement])
-        print("Site {0}:".format(index))
-        print("Corrosion width: {0:.3f} in.".format(width_corrosion))
-        print("Corrosion height: {0:.3f} in.".format(height_corrosion))
-        print("Corrosion displacement: {0:.3f} px".format(displacement))
+        anomalies = []
+        for index, anomaly in enumerate(characteristics):
+            if mode == 'on':
+                width_corrosion, height_corrosion, displacement = compute_length(image, anomaly[0], anomaly[1], anomaly[2], distance, localization, True)
+            elif mode == 'off':
+                width_corrosion, height_corrosion, displacement = compute_length(image, anomaly[0], anomaly[1], anomaly[2], distance, localization, False)
+            else:
+                print("\nPlease select either 'on' or 'off' for sensing package")
+                sys.exit(2)
+
+            anomalies.append([width_corrosion, height_corrosion, displacement])
+            print("\nSite {0}:".format(index))
+            print("Corrosion width: {0:.3f} in.".format(width_corrosion))
+            print("Corrosion height: {0:.3f} in.".format(height_corrosion))
+            print("Corrosion displacement: {0:.3f} in".format(displacement))
+
+    except IndexError:
+        print("\n6 arguments should be present")
+        print("Usage: python3 length_computation.py [file] [dist] [local] [thresh] [inv] [pkg]")
+        print("1. Filename to be processed")
+        print("2. Distance from object in centimeters")
+        print("3. Distance from the front of the pipe in centimeters")
+        print("4. Threshold value for filtering")
+        print("5. Inverse filtering (False by default)")
+        print("6. Add length of robot")
+        sys.exit(3)
+
 
 if __name__ == "__main__":
     main(sys.argv)
