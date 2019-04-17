@@ -21,7 +21,7 @@ import math
 import imutils
 import sys
 
-def compute_length(image, w, h, s, d, z, mode):
+def compute_length(image, w, h, s, d, z, dist, img):
     # Field of View for PiCamera V2
     FOV = (62.2, 48.8) #deg: horizontal X vertical
 
@@ -42,9 +42,24 @@ def compute_length(image, w, h, s, d, z, mode):
 
     #Ouptut the offset distance in inches
     displacement = (px_width*s + z)/2.54
-    if mode is True:
-        #If adding the robot's length
-        displacement = displacement + 24 #inches
+
+    #Computation for all cases
+    d_utc = 2.8 #cm
+    d_r = 24*2.54 #cm
+    d_bp = 152.87752 #cm
+    d_lp = 194.05092 #cm
+    d_b = 3.254 #cm
+    if dist == "front" and img == "front":
+        displacement = d + (d_utc - d_b) + displacement
+    elif dist == "front" and img == "back":
+        displacement = d - d_b + d_r - d_utc + displacement
+    elif dist == "rear" and img == "front":
+        displacement = d_bp - d - d_r + d_utc + displacment
+    elif dist == "back" and img == "back":
+        displacment = d_bp - d - d_utc + displacement
+    else:
+        print("Invalid sensor positions. Exiting...")
+        sys.exit(3)
 
     return real_width, real_height, displacement
 
@@ -170,28 +185,45 @@ def YCrCb_filter(image, channel='cb', thresh=127):
 
     return threshold
 
+def write_output(filehandle, num, o_clock, z, length, width, depth):
+    file = open(filehandle, "w+")
+    file.write("Anamoly {0}\n".format(num))
+    file.write("Corrosion site:\n")
+    file.write("O'clock position: {0}'clock\n".format(o_clock))
+    file.write("Z-axis position: {0:.3f} in.\n".format(z))
+    file.write("Length of corrosion: {0:.3f} in.\n".format(length))
+    file.write("Width of corrosion: {0:.3f} in.\n".format(width))
+    file.write("Depth: {0:.3f} in.\n".format(depth))
+    file.close()
+
 def main(args):
     #Try to run main from sys arguments
     try:
     #Inputs from system arguments
         filehandle = args[1]
         print("\nOpening and processing '{0}'...".format(filehandle))
-        distance = float(args[2]) #cm
-        print("Distance from object: {0} cm".format(distance))
-        localization = float(args[3])
-        print("Distance from front of pipe: {0} cm".format(localization))
-        val = int(args[4])
+        val = int(args[2])
         print("Threshold value is set at: {} (recommended around 80)".format(val))
-        inverted = str(args[5])
+        inverted = str(args[3])
         if not (inverted == 'black' or inverted == 'white'):
             print("Please enter 'black' or 'white'.")
             sys.exit(1)
         print("Inverse filtering: {}".format(inverted))
-        mode = str(args[6])
-        if not (mode == 'on' or mode == 'off'):
-            print("Please enter 'on' or 'off'.")
+
+        num = input("Please enter anamoly number: ")
+        o_clock = input("Please enter o'clock position: ")
+        depth = float(input("Please enter depth (mm): "))/25.4
+        type = input("Type of degredation (corrosion/coating damage): ")
+        distance = float(input("Distance from corrosion site (cm): "))
+        z_position = float(input("Z-axis position (cm): "))
+        distance_sensor = input("Distance sensor (front/back): ")
+        if distance_sensor != "front" and distance_sensor != "back":
+            print("Error: Invalid sensor. Please select either front or back sensor.")
             sys.exit(1)
-        print("Add length of robot: {}".format(mode))
+        image_sensor = input("Image sensor (front/back):")
+        if image_sensor != "front" and image_sensor != "back":
+            print("Error: Invalid sensor. Please select either front or back sensor.")
+            sys.exit(1)
 
         #Opening filehandle for reading and saving in memory
         image = cv.imread(filehandle)
@@ -205,30 +237,29 @@ def main(args):
 
         anomalies = []
         for index, anomaly in enumerate(characteristics):
-            if mode == 'on':
-                width_corrosion, height_corrosion, displacement = compute_length(image, anomaly[0], anomaly[1], anomaly[2], distance, localization, True)
-            elif mode == 'off':
-                width_corrosion, height_corrosion, displacement = compute_length(image, anomaly[0], anomaly[1], anomaly[2], distance, localization, False)
-            else:
-                print("\nPlease select either 'on' or 'off' for sensing package")
-                sys.exit(2)
+            width_corrosion, height_corrosion, displacement = compute_length(image, anomaly[0], anomaly[1], anomaly[2], distance, z_position, distance_sensor, image_sensor)
 
             anomalies.append([width_corrosion, height_corrosion, displacement])
+
             print("\nSite {0}:".format(index))
-            print("Corrosion width: {0:.3f} in.".format(width_corrosion))
-            print("Corrosion height: {0:.3f} in.".format(height_corrosion))
-            print("Corrosion displacement: {0:.3f} in".format(displacement))
+            print("Anamoly {0}".format(num))
+            print("Corrosion site:")
+            print("O'clock position: {0}".format(o_clock))
+            print("Z-axis position: {0:.3f} in.".format(displacement))
+            print("Length of corrosion: {0:.3f} in.".format(height_corrosion))
+            print("Width of corrosion: {0:.3f} in.".format(width_corrosion))
+            print("Depth: {0:.3f} in.".format(depth))
+            filehandle = "{0}_output.txt".format(num)
+            write_output(filehandle, num, o_clock, displacement, height_corrosion, width_corrosion, depth)
 
     except IndexError:
         print("\n6 arguments should be present")
-        print("Usage: python3 length_computation.py [file] [dist] [local] [thresh] [inv] [pkg]")
+        print("Usage: python3 length_computation.py [file] [thresh] [inv]")
         print("1. Filename to be processed")
-        print("2. Distance from object in centimeters")
-        print("3. Distance from the front of the pipe in centimeters")
-        print("4. Threshold value for filtering")
-        print("5. Inverse filtering (False by default)")
-        print("6. Add length of robot")
+        print("2. Threshold value for filtering")
+        print("3. Inverse filtering (False by default)")
         sys.exit(3)
+
 
 
 if __name__ == "__main__":
