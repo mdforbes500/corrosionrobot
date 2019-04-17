@@ -19,6 +19,7 @@ import cv2 as cv
 import numpy as np
 import math
 import imutils
+import os
 import sys
 
 def compute_length(image, w, h, s, d, z, dist, img):
@@ -41,22 +42,23 @@ def compute_length(image, w, h, s, d, z, dist, img):
     real_height = px_height*h/2.54
 
     #Ouptut the offset distance in inches
-    displacement = (px_width*s + z)/2.54
+    displacement = (px_width*s)
+    print(displacement)
 
     #Computation for all cases
     d_utc = 2.8 #cm
-    d_r = 24*2.54 #cm
+    d_r = 91.44 #cm
     d_bp = 152.87752 #cm
     d_lp = 194.05092 #cm
-    d_b = 3.254 #cm
-    if dist == "front" and img == "front":
-        displacement = d + (d_utc - d_b) + displacement
+    d_b = 11.43 #cm
+    if dist == "back" and img == "back":
+        displacement = (z + d_utc - d_b + displacement)/2.54 #in
+    elif dist == "back" and img == "front":
+        displacement = (z - d_b + d_r - d_utc + displacement)/2.54 #in
     elif dist == "front" and img == "back":
-        displacement = d - d_b + d_r - d_utc + displacement
-    elif dist == "rear" and img == "front":
-        displacement = d_bp - d - d_r + d_utc + displacment
-    elif dist == "back" and img == "back":
-        displacment = d_bp - d - d_utc + displacement
+        displacement = (d_lp - z - d_r + d_utc + d_b + displacement)/2.54 #in
+    elif dist == "front" and img == "front":
+        displacement = (d_lp - z + d_utc + d_b + displacement)/2.54 #in
     else:
         print("Invalid sensor positions. Exiting...")
         sys.exit(3)
@@ -186,14 +188,14 @@ def YCrCb_filter(image, channel='cb', thresh=127):
     return threshold
 
 def write_output(filehandle, num, o_clock, z, length, width, depth):
-    file = open(filehandle, "w+")
+    file = open(filehandle, "a+")
     file.write("Anamoly {0}\n".format(num))
     file.write("Corrosion site:\n")
     file.write("O'clock position: {0}'clock\n".format(o_clock))
     file.write("Z-axis position: {0:.3f} in.\n".format(z))
     file.write("Length of corrosion: {0:.3f} in.\n".format(length))
     file.write("Width of corrosion: {0:.3f} in.\n".format(width))
-    file.write("Depth: {0:.3f} in.\n".format(depth))
+    file.write("Depth: {0:.3f} in.\n\n".format(depth))
     file.close()
 
 def main(args):
@@ -220,7 +222,7 @@ def main(args):
         if distance_sensor != "front" and distance_sensor != "back":
             print("Error: Invalid sensor. Please select either front or back sensor.")
             sys.exit(1)
-        image_sensor = input("Image sensor (front/back):")
+        image_sensor = input("Image sensor (front/back): ")
         if image_sensor != "front" and image_sensor != "back":
             print("Error: Invalid sensor. Please select either front or back sensor.")
             sys.exit(1)
@@ -238,18 +240,24 @@ def main(args):
         anomalies = []
         for index, anomaly in enumerate(characteristics):
             width_corrosion, height_corrosion, displacement = compute_length(image, anomaly[0], anomaly[1], anomaly[2], distance, z_position, distance_sensor, image_sensor)
-
             anomalies.append([width_corrosion, height_corrosion, displacement])
 
             print("\nSite {0}:".format(index))
             print("Anamoly {0}".format(num))
-            print("Corrosion site:")
+            print("{} site:".format(type))
             print("O'clock position: {0}".format(o_clock))
             print("Z-axis position: {0:.3f} in.".format(displacement))
             print("Length of corrosion: {0:.3f} in.".format(height_corrosion))
             print("Width of corrosion: {0:.3f} in.".format(width_corrosion))
             print("Depth: {0:.3f} in.".format(depth))
             filehandle = "{0}_output.txt".format(num)
+            # first_write = 1
+            #if os.path.exists(filehandle) and first_write == 1:
+            #    os.remove(filehandle)
+            #    write_output(filehandle, num, o_clock, displacement, height_corrosion, width_corrosion, depth)
+            #    first_write = 0
+            #else:
+            #   write_output(filehandle, num, o_clock, displacement, height_corrosion, width_corrosion, depth)
             write_output(filehandle, num, o_clock, displacement, height_corrosion, width_corrosion, depth)
 
     except IndexError:
